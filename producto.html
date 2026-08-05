@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>fabrick Store · aventura - Carbon Frame Bike</title>
+		<link rel="icon" href="favicon.svg" type="image/svg+xml">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+		<style>
+			:root {
+				--bg: #ffffff;
+				--ink: #111111;
+				--muted: #7a828c;
+				--faint: rgba(17, 17, 17, 0.05);
+				--yellow: #f2b705;
+				--yellow2: #ffd21f;
+				--cyan: #0ea5e9;
+				--line: rgba(17, 17, 17, 0.1);
+				--glass: rgba(255, 255, 255, 0.58);
+				--glass-strong: rgba(255, 255, 255, 0.72);
+				--shadow: 0 18px 50px rgba(17, 17, 17, 0.12);
+				--font-display: "Playfair Display", Georgia, serif;
+				--font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+			}
+			* { box-sizing: border-box; margin: 0; }
+			body { background: var(--bg); color: var(--ink); font-family: var(--font-body); min-height: 100vh; }
+			header {
+				display: flex; align-items: center; justify-content: space-between;
+				padding: 16px 26px; border-bottom: 1px solid var(--line);
+				position: sticky; top: 0; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); z-index: 10;
+			}
+			header .logo { display: flex; align-items: baseline; gap: 16px; }
+			.brand { display: flex; align-items: center; gap: 9px; font-size: 28px; line-height: 1; }
+			.brand .y {
+				font-family: var(--font-display); font-style: italic; font-weight: 700; color: var(--yellow);
+				text-shadow: 0 2px 18px rgba(242, 183, 5, 0.3);
+			}
+			.brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); display: inline-block; }
+			header h1 { font-size: 22px; font-weight: 700; display: inline; }
+			.tag { font-family: var(--font-display); font-style: italic; font-size: 12px; letter-spacing: 5px; text-transform: lowercase; }
+			header a.back {
+				color: var(--ink); text-decoration: none; font-size: 13px; padding: 10px 15px;
+				border: 1px solid var(--line); border-radius: 13px; background: var(--glass-strong); transition: transform 0.15s, box-shadow 0.15s; font-weight: 600;
+				backdrop-filter: blur(14px);
+			}
+			header a.back:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+			header a.back i { color: var(--yellow); margin-right: 7px; }
+
+			#hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 34px; padding: 34px 26px 20px; max-width: 1180px; margin: 0 auto; }
+			#viewerWrap {
+				position: relative; border-radius: 22px; overflow: hidden;
+				border: 1px solid var(--line); background: linear-gradient(160deg, #f7f9fb, #eef1f5); min-height: 460px; box-shadow: var(--shadow);
+			}
+			#viewerWrap canvas { display: block; width: 100%; height: 100%; }
+			#viewerWrap .badge {
+				position: absolute; top: 14px; left: 14px; z-index: 5;
+				background: var(--yellow); color: #1a1300; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+				padding: 6px 12px; border-radius: 20px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(242, 183, 5, 0.35);
+			}
+			#viewerWrap .spin {
+				position: absolute; bottom: 12px; right: 14px; z-index: 5;
+				font-size: 11px; color: var(--muted); background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
+				padding: 5px 11px; border-radius: 20px; border: 1px solid var(--line);
+			}
+			#viewerWrap .spin i { color: var(--yellow); margin-right: 5px; }
+
+			#buyCol { display: flex; flex-direction: column; gap: 14px; }
+			#buyCol .crumb { font-size: 12px; color: var(--muted); }
+			#buyCol .crumb a { color: var(--yellow); text-decoration: none; font-weight: 700; }
+			#buyCol h2 { font-size: 30px; font-weight: 800; line-height: 1.15; color: var(--ink); }
+			#buyCol h2 em { font-family: var(--font-display); font-style: italic; color: var(--yellow); font-weight: 700; }
+			#buyCol .sub { color: var(--muted); font-size: 14px; line-height: 1.6; }
+			#buyCol .price { font-size: 34px; font-weight: 800; color: var(--ink); }
+			#buyCol .price em { color: var(--yellow); font-style: normal; }
+			#buyCol .price small { font-size: 14px; color: var(--muted); font-weight: 400; }
+			#buyCol .stars { color: var(--yellow); font-size: 15px; letter-spacing: 2px; }
+			#buyCol .stars small { color: var(--muted); font-size: 12px; letter-spacing: 0; }
+			#buyCol .features { list-style: none; display: grid; gap: 9px; }
+			#buyCol .features li { font-size: 13px; color: #3a4048; display: flex; gap: 10px; align-items: flex-start; }
+			#buyCol .features li::before { content: '✦'; color: var(--yellow); flex: none; }
+			#buyCol .row { display: flex; gap: 10px; flex-wrap: wrap; }
+			#buyCol .row button {
+				flex: 1; min-width: 170px; border-radius: 14px; padding: 14px 18px; font-size: 14.5px;
+				font-weight: 800; cursor: pointer; font-family: inherit; border: 0; transition: transform 0.15s, box-shadow 0.15s;
+				display: flex; align-items: center; justify-content: center; gap: 9px;
+			}
+			#buyCol .row .add {
+				background: var(--glass-strong); color: var(--ink); border: 1px solid var(--line); backdrop-filter: blur(14px);
+				box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07);
+			}
+			#buyCol .row .add i { color: var(--yellow); }
+			#buyCol .row .now { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; box-shadow: 0 8px 26px rgba(242, 183, 5, 0.45); }
+			#buyCol .row .now:hover { background: linear-gradient(135deg, var(--yellow2), #ffe25c); }
+			#buyCol .row button:hover { transform: translateY(-2px); }
+			#buyCol .row button:active { transform: scale(0.98); }
+			#cartPill {
+				position: fixed; top: 14px; right: 168px; z-index: 15;
+				background: var(--glass-strong); border: 1px solid var(--line); color: var(--ink);
+				padding: 10px 14px; border-radius: 13px; font-size: 13px; display: flex; gap: 8px; align-items: center;
+				box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07); font-weight: 600; backdrop-filter: blur(14px);
+			}
+			#cartPill i { color: var(--yellow); }
+			#cartPill .n {
+				background: var(--yellow); color: #1a1300; border-radius: 50%; min-width: 20px; height: 20px;
+				display: grid; place-items: center; font-size: 11px; font-weight: 800;
+			}
+			#toast {
+				position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+				z-index: 20; background: var(--yellow); color: #1a1300; font-weight: 800;
+				padding: 13px 24px; border-radius: 14px; font-size: 13.5px; opacity: 0;
+				transition: all 0.3s; pointer-events: none; box-shadow: var(--shadow);
+			}
+			#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+			#specs { padding: 10px 26px 40px; max-width: 1180px; margin: 0 auto; }
+			#specs h3 { font-size: 15px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin: 30px 0 16px; }
+			#specs .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+			#specs .card {
+				background: var(--glass); border: 1px solid var(--line); border-radius: 16px; padding: 16px 17px;
+				transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+				backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
+			}
+			#specs .card:hover { transform: translateY(-3px); border-color: rgba(242, 183, 5, 0.5); box-shadow: var(--shadow); }
+			#specs .card h4 { font-size: 13.5px; margin-bottom: 7px; color: var(--ink); }
+			#specs .card p { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 9px; }
+			#specs .card .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+			#specs .card .chips span {
+				font-size: 10.5px; padding: 3px 8px; border-radius: 20px;
+				background: rgba(242, 183, 5, 0.14); border: 1px solid rgba(242, 183, 5, 0.35); color: #594200; font-weight: 700;
+			}
+			footer { text-align: center; padding: 22px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
+			footer .y { font-family: var(--font-display); font-style: italic; color: var(--yellow); }
+			@media (max-width: 900px) {
+				#hero { grid-template-columns: 1fr; }
+				#viewerWrap { min-height: 320px; }
+				header { flex-wrap: wrap; gap: 10px; }
+				header a.back { padding: 9px 12px; }
+				#cartPill { position: static; }
+				header .logo { flex-direction: column; align-items: flex-start; gap: 3px; }
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="logo">
+				<div>
+					<div class="brand"><span class="y">fabrick</span><span class="dot"></span><h1 style="display:inline">Store</h1></div>
+					<div class="tag">aventura</div>
+				</div>
+			</div>
+			<div style="display:flex;gap:10px;align-items:center">
+				<div id="cartPill"><i class="fa-solid fa-cart-shopping"></i> Carrito: <span class="n">0</span></div>
+				<a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i>Volver al visor 3D</a>
+			</div>
+		</header>
+
+		<section id="hero">
+			<div id="viewerWrap">
+				<div class="badge">Vista 3D en vivo</div>
+				<div class="spin">⟳ rotación automática</div>
+			</div>
+			<div id="buyCol">
+				<div class="crumb"><a href="index.html">Visor 3D</a> / Detalle del producto</div>
+				<h2>Carbon Frame Bike<br><em>Edición Descenso 2026</em></h2>
+				<div class="sub">
+					Mountain bike de descenso a medida: cuadro de carbono RobertS 2016, 180&nbsp;mm de recorrido,
+					transmisión SRAM X01 Eagle y frenos Magura MT7. Incluye garantía de 5 años y ajuste de suspensión gratuito.
+				</div>
+				<div class="stars">★★★★★ <small>4.9 · 128 reseñas · envío gratis</small></div>
+				<div class="price"><em>€ 4.999,00</em> <small>IVA incluido</small></div>
+				<ul class="features">
+					<li>Cuadro de fibra de carbono con certificación de impacto</li>
+					<li>Suspensión Cane Creek DB 200-57 y horquilla de 180 mm</li>
+					<li>Grupo completo SRAM X01 DH de 12 velocidades</li>
+					<li>Frenos hidráulicos Magura MT7 con discos Hope 200 mm</li>
+					<li>Envío en 5-7 días · Montaje y ajuste incluidos</li>
+				</ul>
+				<div class="row">
+					<button class="add" id="btnAdd"><i class="fa-solid fa-cart-plus"></i> Añadir al carrito</button>
+					<button class="now" id="btnNow"><i class="fa-solid fa-bolt"></i> Comprar ahora</button>
+				</div>
+			</div>
+		</section>
+
+		<section id="specs">
+			<h3>Especificaciones por sección</h3>
+			<div class="grid" id="grid"></div>
+		</section>
+
+		<footer><span class="y">fabrick</span> Store · aventura — Demostración interactiva con three.js · Modelo: prefrontal cortex (Sketchfab)</footer>
+		<div id="toast">Añadido al carrito ✓</div>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./three.module.js",
+					"three/addons/": "./lib/jsm/"
+				}
+			}
+		</script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+			import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+			import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
+
+			const PARTS = [
+				[ 'Cuadro de carbono', 'Fibra de carbono · Geometría DH · Pedalier integrado', 'Marco RobertS 2016 con refuerzos en las uniones y cableado interno.' ],
+				[ 'Basculante trasero', 'Carbono · Pivote sellado · Cinemática de bieletas', 'Vainas y tirantes que comprimen el amortiguador con progresividad.' ],
+				[ 'Amortiguador', 'Cane Creek DB 200-57 · 57 mm', 'Compresión y rebote ajustables para absorber impactos.' ],
+				[ 'Horquilla delantera', 'Telescópica · 180 mm · Ajuste de precarga', 'Absorbe baches, raíces y saltos manteniendo la tracción.' ],
+				[ 'Manillar y dirección', 'Manillar ancho · Potencia Hope FR 35 mm', 'Puños ergonómicos, dirección sellada y mandos de freno.' ],
+				[ 'Frenos', 'Magura MT7 · 4 pistones · Discos Hope 200 mm', 'Hidráulicos con gran potencia y resistencia térmica.' ],
+				[ 'Rueda delantera', '27.5" · Vee Tire 584x75 · Buje Tune King 110 mm', '32 radios y disco de freno flotante de 200 mm.' ],
+				[ 'Rueda trasera', '24" · Vee Tire 507x100 · Buje Tune Kong 150 mm', 'Eje pasante y casete SRAM X01 Eagle de 12 velocidades.' ],
+				[ 'Transmisión', 'SRAM X01 DH · Plato 26 dientes', 'Bielas X01, cadena reforzada y cambio con tensor.' ],
+				[ 'Sillín y tija', 'Sillín RobertS · Tija regulable', 'Postura ajustable para máxima eficiencia de pedaleo.' ],
+				[ 'Pedales', 'Funn Bigfoot · Plataforma con pines', 'Agarre sin calas ideal para descenso y enduro.' ]
+			];
+
+			const grid = document.getElementById( 'grid' );
+			for ( const [ name, chips, desc ] of PARTS ) {
+
+				const card = document.createElement( 'div' );
+				card.className = 'card';
+				let chipHtml = '';
+				for ( const c of chips.split( '·' ) ) chipHtml += '<span>' + c.trim() + '</span>';
+				card.innerHTML = '<h4>' + name + '</h4><p>' + desc + '</p><div class="chips">' + chipHtml + '</div>';
+				grid.appendChild( card );
+
+			}
+
+			let cart = 0;
+			const cartN = document.querySelector( '#cartPill .n' );
+			const toast = document.getElementById( 'toast' );
+			let toastTimer = null;
+
+			function beep() {
+
+				try {
+
+					const ctx = new ( window.AudioContext || window.webkitAudioContext )();
+					const t = ctx.currentTime;
+					const o = ctx.createOscillator(), g = ctx.createGain();
+					o.frequency.value = 880;
+					g.gain.setValueAtTime( 0.0001, t );
+					g.gain.exponentialRampToValueAtTime( 0.15, t + 0.01 );
+					g.gain.exponentialRampToValueAtTime( 0.0001, t + 0.12 );
+					o.connect( g ).connect( ctx.destination );
+					o.start( t );
+					o.stop( t + 0.14 );
+
+				} catch ( e ) { }
+
+			}
+
+			function showToast() {
+
+				toast.classList.add( 'show' );
+				clearTimeout( toastTimer );
+				toastTimer = setTimeout( () => toast.classList.remove( 'show' ), 2200 );
+
+			}
+
+			document.getElementById( 'btnAdd' ).addEventListener( 'click', () => {
+
+				cart ++;
+				cartN.textContent = cart;
+				beep();
+				showToast();
+
+			} );
+
+			document.getElementById( 'btnNow' ).addEventListener( 'click', () => {
+
+				beep();
+				toast.textContent = '🛒 Pedido de demostración generado (€ 4.999,00)';
+				showToast();
+
+			} );
+
+			const wrap = document.getElementById( 'viewerWrap' );
+
+			const renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
+			renderer.toneMapping = THREE.ACESFilmicToneMapping;
+			wrap.appendChild( renderer.domElement );
+
+			const camera = new THREE.PerspectiveCamera( 30, 1, 0.25, 20 );
+			camera.position.set( - 3, 1.5, 3.5 );
+
+			const pmrem = new THREE.PMREMGenerator( renderer );
+			const scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0xf4f6f8 );
+			scene.environment = pmrem.fromScene( new RoomEnvironment(), 0.04 ).texture;
+
+			const controls = new OrbitControls( camera, renderer.domElement );
+			controls.target.set( 0, 0.7, 0 );
+			controls.enableDamping = true;
+			controls.enableZoom = false;
+			controls.autoRotate = true;
+			controls.autoRotateSpeed = 0.9;
+			controls.minPolarAngle = Math.PI / 3.2;
+			controls.maxPolarAngle = Math.PI / 2.2;
+
+			const ktx2 = new KTX2Loader().setTranscoderPath( './lib/basis/' ).detectSupport( renderer );
+			const draco = new DRACOLoader().setDecoderPath( './lib/draco/gltf/' );
+			const loader = new GLTFLoader();
+			loader.setDRACOLoader( draco );
+			loader.setKTX2Loader( ktx2 );
+
+			const mixers = [];
+
+			loader.load( './models/CarbonFrameBike.glb', ( result ) => {
+
+				scene.add( result.scene );
+
+				if ( result.animations.length > 0 ) {
+
+					const mixer = new THREE.AnimationMixer( result.scene );
+					const action = mixer.clipAction( result.animations[ 0 ] );
+					action.setLoop( THREE.LoopRepeat, Infinity );
+					action.timeScale = 0.5;
+					action.play();
+					mixers.push( mixer );
+
+				}
+
+			} );
+
+			function resize() {
+
+				const w = wrap.clientWidth, h = wrap.clientHeight;
+				renderer.setSize( w, h );
+				camera.aspect = w / h;
+				camera.updateProjectionMatrix();
+
+			}
+
+			resize();
+			window.addEventListener( 'resize', resize );
+
+			renderer.setAnimationLoop( () => {
+
+				for ( const m of mixers ) m.update( 1 / 60 );
+				controls.update();
+				renderer.render( scene, camera );
+
+			} );
+
+		</script>
+	</body>
+</html>

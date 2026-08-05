@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>fabrick Store · aventura - Carbon Frame Bike</title>
+		<link rel="icon" href="favicon.svg" type="image/svg+xml">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+		<style>
+			:root {
+				--bg: #ffffff;
+				--ink: #111111;
+				--muted: #7a828c;
+				--faint: rgba(17, 17, 17, 0.05);
+				--yellow: #f2b705;
+				--yellow2: #ffd21f;
+				--cyan: #0ea5e9;
+				--line: rgba(17, 17, 17, 0.1);
+				--glass: rgba(255, 255, 255, 0.58);
+				--glass-strong: rgba(255, 255, 255, 0.72);
+				--shadow: 0 18px 50px rgba(17, 17, 17, 0.12);
+				--font-display: "Playfair Display", Georgia, serif;
+				--font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+			}
+			* { box-sizing: border-box; margin: 0; }
+			html, body { height: 100%; overflow: hidden; background: var(--bg); font-family: var(--font-body); color: var(--ink); }
+			body { position: relative; }
+			#app { position: fixed; inset: 0; z-index: 0; }
+			#app canvas { display: block; }
+
+			#wordmark {
+				position: fixed; z-index: 1; pointer-events: none; right: -2vw; bottom: 4vh;
+				font-family: var(--font-display); font-style: italic;
+				font-size: clamp(70px, 14vw, 190px); font-weight: 500; letter-spacing: 0.06em;
+				color: rgba(17, 17, 17, 0.05); text-transform: lowercase; line-height: 1; user-select: none;
+				transform: rotate(-3deg);
+			}
+
+			header {
+				position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+				padding: 20px 26px; pointer-events: none;
+				background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), transparent);
+			}
+			#logo3d {
+				width: min(50vw, 430px); aspect-ratio: 1040 / 250; pointer-events: none;
+				display: block; margin-left: -6px;
+			}
+			#logo3d canvas { width: 100% !important; height: 100% !important; display: block; }
+			#logo3d .fallback {
+				display: none; font-family: var(--font-display); font-style: italic; font-weight: 700;
+				font-size: 34px; color: var(--yellow); letter-spacing: 0.2px; line-height: 1; padding-top: 26px;
+			}
+			#logo3d.failed canvas { display: none; }
+			#logo3d.failed .fallback { display: block; }
+
+			#soundBtn {
+				position: fixed; right: 20px; bottom: 20px; z-index: 25;
+				width: 48px; height: 48px; border-radius: 50%;
+				background: var(--glass-strong); border: 1px solid var(--line); color: var(--ink);
+				backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+				cursor: pointer; font-size: 17px;
+				box-shadow: 0 10px 28px rgba(17, 17, 17, 0.16);
+				display: grid; place-items: center;
+				transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+			}
+			#soundBtn i { color: var(--yellow); }
+			#soundBtn:hover { transform: translateY(-2px) scale(1.06); box-shadow: 0 14px 34px rgba(17, 17, 17, 0.2); }
+			#soundBtn:active { transform: scale(0.94); }
+
+			#infoTab {
+				position: fixed; top: 84px; right: 22px; z-index: 21; width: min(360px, calc(100vw - 36px));
+				background: var(--glass); border: 1px solid var(--line); border-radius: 20px;
+				padding: 18px 20px; backdrop-filter: blur(22px) saturate(1.6); -webkit-backdrop-filter: blur(22px) saturate(1.6);
+				box-shadow: var(--shadow);
+				transform: translateX(calc(100% + 40px)); opacity: 0;
+				transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
+				max-height: 62vh; overflow-y: auto;
+			}
+			#infoTab.open { transform: translateX(0); opacity: 1; }
+			#infoTab::-webkit-scrollbar { width: 6px; }
+			#infoTab::-webkit-scrollbar-thumb { background: rgba(17,17,17,0.18); border-radius: 3px; }
+			#infoTab .kicker {
+				font-size: 10.5px; letter-spacing: 3px; text-transform: uppercase; color: var(--yellow);
+				font-weight: 800; margin-bottom: 6px;
+			}
+			#infoTab h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+			#infoTab h2 .close {
+				background: none; border: 0; color: var(--muted); font-size: 15px; cursor: pointer; padding: 4px 8px; border-radius: 9px;
+			}
+			#infoTab h2 .close:hover { color: var(--ink); background: rgba(17,17,17,0.06); }
+			#infoTab .desc { font-size: 13px; line-height: 1.65; color: #3a4048; margin-bottom: 12px; }
+			#infoTab .specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+			#infoTab .specs span {
+				font-size: 11px; color: #4a515a; background: rgba(255, 255, 255, 0.6);
+				border: 1px solid var(--line); padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(8px);
+			}
+			#infoTab .buy {
+				width: 100%; border: 0; border-radius: 14px; padding: 12px;
+				background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; font-weight: 800; font-size: 14px;
+				cursor: pointer; font-family: inherit; box-shadow: 0 6px 20px rgba(242, 183, 5, 0.4);
+				transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; justify-content: center; gap: 9px;
+			}
+			#infoTab .buy:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(242, 183, 5, 0.55); background: linear-gradient(135deg, var(--yellow2), #ffe25c); }
+			#infoTab .buy:active { transform: scale(0.98); }
+
+			#wheelBox {
+				position: fixed; left: 22px; bottom: 18px; z-index: 20; pointer-events: none;
+				width: 240px;
+			}
+			#wheelBox .label {
+				font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted);
+				margin: 0 14px 8px; display: flex; justify-content: space-between; align-items: center; font-weight: 700;
+			}
+			#wheelBox .label .count { color: var(--yellow); font-weight: 800; }
+			#wheelBox .wheel {
+				position: relative; height: 300px; pointer-events: auto;
+				background: var(--glass); border: 1px solid var(--line); border-radius: 20px;
+				backdrop-filter: blur(20px) saturate(1.6); -webkit-backdrop-filter: blur(20px) saturate(1.6);
+				overflow: hidden; box-shadow: var(--shadow);
+			}
+			#wheelBox .wheel::before, #wheelBox .wheel::after {
+				content: ''; position: absolute; left: 0; right: 0; height: 60px; z-index: 3; pointer-events: none;
+			}
+			#wheelBox .wheel::before { top: 0; background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), transparent); }
+			#wheelBox .wheel::after { bottom: 0; background: linear-gradient(0deg, rgba(255, 255, 255, 0.85), transparent); }
+			#wheelBox .item {
+				position: absolute; left: 10px; right: 10px; top: 50%;
+				padding: 11px 14px; border-radius: 13px; cursor: pointer; user-select: none;
+				display: flex; align-items: center; gap: 10px;
+				transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s, background 0.2s;
+				will-change: transform;
+				font-size: 12.5px; color: var(--muted); text-align: left; font-weight: 600;
+			}
+			#wheelBox .item .dot { width: 7px; height: 7px; border-radius: 50%; background: #c9cdd3; flex: none; transition: all 0.25s; }
+			#wheelBox .item .idx { font-size: 9.5px; font-weight: 800; letter-spacing: 1px; color: rgba(17, 17, 17, 0.32); flex: none; min-width: 20px; transition: color 0.2s; font-variant-numeric: tabular-nums; }
+			#wheelBox .item.active .idx { color: var(--yellow); }
+			#wheelBox .item.active::before {
+				content: ''; position: absolute; left: 0; top: 9px; bottom: 9px; width: 3px; border-radius: 2px;
+				background: linear-gradient(180deg, var(--yellow2), var(--yellow));
+			}
+			#wheelBox .item.active {
+				background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(242, 183, 5, 0.55);
+				color: var(--ink); font-weight: 800; font-size: 13px;
+				box-shadow: 0 6px 20px rgba(242, 183, 5, 0.22); backdrop-filter: blur(6px);
+			}
+			#wheelBox .item.active .dot { background: var(--yellow); box-shadow: 0 0 10px rgba(242, 183, 5, 0.8); }
+			#wheelBox .arrows { display: flex; gap: 8px; justify-content: center; margin-top: 10px; pointer-events: auto; }
+			#wheelBox .arrows button {
+				flex: 1; background: var(--glass-strong); border: 1px solid var(--line); color: var(--ink);
+				border-radius: 13px; padding: 9px; cursor: pointer; font-size: 13px; backdrop-filter: blur(14px);
+				box-shadow: 0 6px 16px rgba(17, 17, 17, 0.08); transition: background 0.15s, transform 0.1s; font-weight: 700;
+			}
+			#wheelBox .arrows button:hover { background: rgba(255, 255, 255, 0.92); transform: translateY(-1px); }
+			#wheelBox .arrows button:active { transform: scale(0.95); }
+
+			#hint {
+				position: fixed; right: 22px; bottom: 80px; z-index: 19;
+				font-size: 11.5px; color: var(--muted); text-align: right; line-height: 1.8;
+				background: rgba(255, 255, 255, 0.6); padding: 9px 14px; border-radius: 13px;
+				border: 1px solid var(--line); pointer-events: none; backdrop-filter: blur(14px); box-shadow: 0 6px 16px rgba(17, 17, 17, 0.06);
+			}
+			#tooltip {
+				position: fixed; z-index: 30; pointer-events: none; display: none;
+				background: rgba(255, 255, 255, 0.92); border: 1px solid var(--yellow);
+				padding: 7px 13px; border-radius: 10px; font-size: 12px; color: var(--ink);
+				font-weight: 700; white-space: nowrap; transform: translate(14px, 12px);
+				box-shadow: var(--shadow); backdrop-filter: blur(10px);
+			}
+			#errBanner {
+				position: fixed; top: 90px; left: 50%; transform: translateX(-50%); z-index: 40;
+				display: none; background: rgba(220, 38, 38, 0.92); color: #fff; padding: 10px 18px;
+				border-radius: 12px; font-size: 13px; max-width: 80vw;
+			}
+			@media (max-width: 900px) {
+				header { display: flex; justify-content: center; padding: 16px 12px 8px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.4), transparent); }
+				#logo3d { width: min(86vw, 400px); margin-left: 0; }
+				#wordmark { display: none; }
+				#infoTab { top: 62px; right: 8px; left: auto; width: min(320px, 84vw); max-height: 52vh; padding: 14px 16px; }
+				#wheelBox { left: 8px; bottom: 8px; transform: none; width: min(58vw, 235px); }
+				#wheelBox .wheel { height: 205px; }
+				#wheelBox .label { font-size: 9px; letter-spacing: 2px; margin: 0 6px 5px; }
+				#wheelBox .item { padding: 9px 11px; font-size: 11.5px; gap: 8px; }
+				#wheelBox .item.active { font-size: 12px; }
+				#wheelBox .arrows button { padding: 7px; font-size: 11px; }
+				#hint { display: none; }
+				#tooltip { display: none !important; }
+				#soundBtn { right: 10px; bottom: 10px; width: 42px; height: 42px; font-size: 15px; }
+			}
+			@media (min-width: 901px) and (max-width: 1120px) {
+				#wheelBox { width: 210px; }
+				#infoTab { width: min(330px, calc(100vw - 36px)); }
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app"></div>
+		<div id="wordmark">aventura</div>
+
+		<header>
+			<div id="logo3d"><span class="fallback">fabrick <span style="color:var(--ink)">Store</span></span></div>
+		</header>
+
+		<button id="soundBtn" title="Sonido"><i class="fa-solid fa-volume-high"></i></button>
+
+		<aside id="infoTab">
+			<div class="kicker" id="tabKicker">Sección seleccionada</div>
+			<h2><span id="tabName"></span><button class="close" id="tabClose" title="Cerrar"><i class="fa-solid fa-xmark"></i></button></h2>
+			<p class="desc" id="tabDesc"></p>
+			<div class="specs" id="tabSpecs"></div>
+			<button class="buy" id="tabBuy"><i class="fa-solid fa-cart-shopping"></i> Comprar esta bicicleta</button>
+		</aside>
+
+		<div id="wheelBox">
+			<div class="label"><span>Ruleta de piezas</span><span class="count" id="wheelCount"></span></div>
+			<div class="wheel" id="wheel"></div>
+			<div class="arrows">
+				<button id="wheelUp" title="Anterior"><i class="fa-solid fa-arrow-up"></i></button>
+				<button id="wheelDown" title="Siguiente"><i class="fa-solid fa-arrow-down"></i></button>
+			</div>
+		</div>
+
+		<div id="hint"><i class="fa-solid fa-hand-pointer"></i> Arrastra para girar la bici<br><i class="fa-solid fa-wand-magic-sparkles"></i> Toca una pieza o gira la ruleta</div>
+		<div id="tooltip"></div>
+		<div id="errBanner"></div>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./three.module.js",
+					"three/addons/": "./lib/jsm/"
+				}
+			}
+		</script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+			import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+			import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+			import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
+			import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+			import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+			const PARTS = [
+				{
+					id: 'cuadro',
+					name: 'Cuadro de carbono',
+					regex: /RobertS2016_Rahmen|RobertS2016_ZB_Rahmen/,
+					desc: 'Marco principal fabricado en fibra de carbono con geometría de descenso: tubo de dirección reforzado, caja de pedalier integrada y refuerzos en las uniones. Es el corazón estructural: une dirección, basculante y transmisión y soporta todo el peso del ciclista.',
+					specs: [ 'Fibra de carbono', 'Geometría DH', 'Pedalier integrado', 'Cableado interno' ]
+				},
+				{
+					id: 'basculante',
+					name: 'Basculante trasero',
+					regex: /RobertS2016_Rahmen_Schwinge|RobertS2016_Rahmen_Verbinder|RobertS2016_Rahmen_Umlenkrollenhalter|RobertS2016_Rahmen_Umlenkrolle|RobertS2016_Rahmen_Daempferaufnahme|RobertS2016_Rahmen_Hauptlager|RobertS2016_Rahmen_Zwischenhuelse|RobertS2016_Rahmen_HR-Aufnahme|RobertS2016_Rahmen_Schaltwerkauge|RobertS2016_Rahmen_Unterschutzplatte/,
+					desc: 'Sistema de suspensión trasera: vainas y tirantes pivotan sobre el eje principal y, mediante la cinemática de bieletas, comprimen el amortiguador. Proporciona progresividad y tracción constante en descensos.',
+					specs: [ 'Pivote principal sellado', 'Cinemática de bieletas', 'Carbono' ]
+				},
+				{
+					id: 'amortiguador',
+					name: 'Amortiguador trasero',
+					regex: /Daempfer_Cane-Creek|Gummi-Metall-Element/,
+					desc: 'Amortiguador Cane Creek Double Barrel 200-57 montado en el triángulo trasero. Controla compresión y rebote del recorrido de la rueda trasera para absorber impactos y mantener la tracción.',
+					specs: [ 'Cane Creek DB 200-57', 'Rebote y compresión ajustables', 'Recorrido 57 mm' ]
+				},
+				{
+					id: 'horquilla',
+					name: 'Horquilla delantera',
+					regex: /Federgabel|Federung/,
+					desc: 'Horquilla de suspensión delantera: barras telescópicas que comprimen mediante aire o muelle para absorber baches, raíces y saltos. Mantiene el tren delantero pegado al suelo.',
+					specs: [ 'Suspensión telescópica', 'Precarga ajustable', 'Dirección 1 1/8"' ]
+				},
+				{
+					id: 'manillar',
+					name: 'Manillar y dirección',
+					regex: /Lenker|Lenkergriff|Vorbau|Bremsgriff|Bremsschlauch|Steuersatz|Schlauch_/,
+					desc: 'Conjunto de control: manillar ancho, puños ergonómicos, potencia Hope FR 35 mm, juego de dirección sellado y mandos de freno con latiguillos. Desde aquí diriges, frenas y controlas la bicicleta.',
+					specs: [ 'Manillar de doble altura', 'Potencia Hope FR 35 mm', 'Dirección sellada' ]
+				},
+				{
+					id: 'frenos',
+					name: 'Frenos de disco',
+					regex: /Magura_MT7/,
+					desc: 'Frenos hidráulicos Magura MT7: pinzas de cuatro pistones con gran potencia y resistencia al sobrecalentamiento en descensos largos. Trabajan con discos flotantes Hope de 200 mm.',
+					specs: [ 'Magura MT7', '4 pistones', 'Hidráulico', 'Discos Hope 200 mm' ]
+				},
+				{
+					id: 'rueda_delantera',
+					name: 'Rueda delantera',
+					regex: /RadVorn/,
+					desc: 'Rueda delantera: llanta de aluminio 27.5", neumático Vee Tire de 75 mm, buje Tune King Boost 110 mm con 32 radios y disco de freno de 200 mm. Define la precisión de la dirección.',
+					specs: [ 'Llanta 584x24 (27.5")', 'Vee Tire 584x75', 'Buje Tune King 110 mm', '32 radios' ]
+				},
+				{
+					id: 'rueda_trasera',
+					name: 'Rueda trasera',
+					regex: /RadHinten|Federachse/,
+					desc: 'Rueda trasera: llanta 24", neumático Vee Tire de 100 mm, buje Tune Kong de 150 mm con eje pasante y casete SRAM X01 Eagle de 12 velocidades. Transmite la potencia al suelo.',
+					specs: [ 'Llanta 507x46 (24")', 'Vee Tire 507x100', 'Buje Tune Kong 150 mm', 'SRAM X01 Eagle 10-42' ]
+				},
+				{
+					id: 'transmision',
+					name: 'Transmisión',
+					regex: /Kette|Kettenblatt|Kurbel|Schaltwerk/,
+					desc: 'Transmisión SRAM X01 DH: plato direct mount de 26 dientes, bielas X01 DH, cadena de alta resistencia y cambio trasero con tensor que mantiene la cadena estable en terrenos agresivos.',
+					specs: [ 'SRAM X01 DH', 'Plato 26 dientes', 'Cambio con tensor', 'Cadena reforzada' ]
+				},
+				{
+					id: 'sillin',
+					name: 'Sillín y tija',
+					regex: /Sattel/,
+					desc: 'Sillín deportivo RobertS sobre tija regulable. La altura y el ángulo del sillín definen la postura del ciclista y condicionan la eficiencia del pedaleo.',
+					specs: [ 'Sillín RobertS', 'Tija regulable', 'Inclinación ajustable' ]
+				},
+				{
+					id: 'pedales',
+					name: 'Pedales',
+					regex: /Pedal_Funn/,
+					desc: 'Pedales de plataforma Funn Bigfoot: superficie amplia con pines de agarre para fijar el pie sin calas. Ideales para descenso y enduro.',
+					specs: [ 'Funn Bigfoot', 'Plataforma con pines', 'Rodamientos sellados' ]
+				}
+			];
+
+			const OVERVIEW = {
+				id: 'overview',
+				name: 'Vista general',
+				part: null,
+				desc: 'Carbon Frame Bike es una mountain bike de descenso fabricada a medida: cuadro de carbono RobertS 2016, 180 mm de recorrido, transmisión SRAM X01 Eagle y frenos Magura MT7. Cada pieza se puede explorar en 3D girando la ruleta o tocándola directamente sobre la bicicleta.',
+				specs: [ '180 mm de recorrido', 'SRAM X01 DH', 'Magura MT7', 'Peso aprox. 14,2 kg' ]
+			};
+
+			const app = document.getElementById( 'app' );
+			const wheel = document.getElementById( 'wheel' );
+			const wheelCount = document.getElementById( 'wheelCount' );
+			const infoTab = document.getElementById( 'infoTab' );
+			const tabKicker = document.getElementById( 'tabKicker' );
+			const tabName = document.getElementById( 'tabName' );
+			const tabDesc = document.getElementById( 'tabDesc' );
+			const tabSpecs = document.getElementById( 'tabSpecs' );
+			const tooltip = document.getElementById( 'tooltip' );
+			const errBanner = document.getElementById( 'errBanner' );
+			const soundBtn = document.getElementById( 'soundBtn' );
+
+			let camera, scene, renderer, mixer, action, controls, bike;
+			let selectedPart = null;
+			let hoveredPart = null;
+			let soundOn = true;
+
+			const timer = new THREE.Timer();
+			const raycaster = new THREE.Raycaster();
+			const pointer = new THREE.Vector2();
+			const meshesByPart = new Map();
+			const meshToPart = new Map();
+			const focusAnim = { active: false, t: 0, from: null, to: null, fromCam: null, toCam: null };
+
+			const ITEMS = [ OVERVIEW, ...PARTS ];
+			let wheelIndex = 0;
+			let wheelTimer = null;
+
+			init();
+
+			function init() {
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
+				renderer.setSize( innerWidth, innerHeight );
+				renderer.setAnimationLoop( animate );
+				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				app.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 35, innerWidth / innerHeight, 0.25, 20 );
+				camera.position.set( - 2.5, 1.6, 3.0 );
+
+				const pmrem = new THREE.PMREMGenerator( renderer );
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xffffff );
+				scene.environment = pmrem.fromScene( new RoomEnvironment(), 0.04 ).texture;
+
+				loadModel();
+
+				controls = new OrbitControls( camera, renderer.domElement );
+				controls.minDistance = 1.4;
+				controls.maxDistance = 10;
+				controls.enableDamping = true;
+				controls.target.set( 0, 0.7, 0 );
+				controls.update();
+
+				buildWheel();
+
+				renderer.domElement.addEventListener( 'pointermove', onPointerMove );
+				renderer.domElement.addEventListener( 'pointerdown', onPointerDown );
+				renderer.domElement.addEventListener( 'pointerleave', () => { tooltip.style.display = 'none'; } );
+
+				document.getElementById( 'tabClose' ).addEventListener( 'click', closeInfoTab );
+				soundBtn.addEventListener( 'click', toggleSound );
+				document.getElementById( 'tabBuy' ).addEventListener( 'click', goBuy );
+				document.getElementById( 'wheelUp' ).addEventListener( 'click', ( e ) => { e.stopPropagation(); rotateWheel( - 1 ); } );
+				document.getElementById( 'wheelDown' ).addEventListener( 'click', ( e ) => { e.stopPropagation(); rotateWheel( 1 ); } );
+
+				wheel.addEventListener( 'wheel', ( e ) => { e.preventDefault(); rotateWheel( e.deltaY > 0 ? 1 : - 1 ); }, { passive: false } );
+
+				let touchY = null;
+				wheel.addEventListener( 'touchstart', ( e ) => { touchY = e.touches[ 0 ].clientY; }, { passive: true } );
+				wheel.addEventListener( 'touchend', ( e ) => {
+					if ( touchY === null ) return;
+					const dy = e.changedTouches[ 0 ].clientY - touchY;
+					if ( Math.abs( dy ) > 30 ) rotateWheel( dy < 0 ? - 1 : 1 );
+					touchY = null;
+				}, { passive: true } );
+
+				document.addEventListener( 'pointerdown', ensureAudio, { once: true, capture: true } );
+
+				window.addEventListener( 'resize', onResize );
+
+				if ( window.gsap ) {
+
+					gsap.fromTo( '#wordmark', { opacity: 0 }, { opacity: 1, duration: 1.6, delay: 0.5, ease: 'power2.out' } );
+					gsap.to( '#wordmark', { y: - 18, duration: 4.2, yoyo: true, repeat: - 1, ease: 'sine.inOut', delay: 1.2 } );
+					gsap.from( '#wheelBox', { y: 30, opacity: 0, duration: 0.9, delay: 0.5, ease: 'power3.out' } );
+					gsap.from( '#hint', { y: 16, opacity: 0, duration: 0.8, delay: 0.65, ease: 'power3.out' } );
+					gsap.from( '#soundBtn', { scale: 0, opacity: 0, duration: 0.5, delay: 0.75, ease: 'back.out(2)' } );
+
+				}
+
+				initLogo();
+
+			}
+
+			const logoHost = document.getElementById( 'logo3d' );
+			let logoScene = null, logoCamera = null, logoRenderer = null;
+
+			function buildWord( font, text, mat, size, height ) {
+
+				const group = new THREE.Group();
+				const meshes = [];
+				let cursor = 0;
+
+				for ( let i = 0; i < text.length; i ++ ) {
+
+					const ch = text[ i ];
+					if ( ch === ' ' ) { cursor += size * 0.3; continue; }
+
+					const geo = new TextGeometry( ch, {
+						font: font, size: size, height: height,
+						curveSegments: 6,
+						bevelEnabled: true, bevelThickness: 0.035 * size, bevelSize: 0.03 * size, bevelSegments: 3
+					} );
+					geo.computeBoundingBox();
+					const mesh = new THREE.Mesh( geo, mat );
+					mesh.position.x = cursor - geo.boundingBox.min.x;
+					group.add( mesh );
+					meshes.push( mesh );
+					cursor += geo.boundingBox.max.x - geo.boundingBox.min.x + size * 0.05;
+
+				}
+
+				group.updateWorldMatrix( true, true );
+				return { group, meshes, width: cursor - size * 0.05 };
+
+			}
+
+			function initLogo() {
+
+				if ( ! logoHost ) return;
+				logoScene = new THREE.Scene();
+				logoCamera = new THREE.OrthographicCamera( - 5.2, 5.2, 1.25, - 1.25, 0.1, 50 );
+				logoCamera.position.z = 12;
+
+				logoScene.add( new THREE.AmbientLight( 0xffffff, 1.5 ) );
+				const d1 = new THREE.DirectionalLight( 0xffffff, 2.0 ); d1.position.set( 4, 6, 6 ); logoScene.add( d1 );
+				const d2 = new THREE.DirectionalLight( 0xfff3c4, 1.0 ); d2.position.set( - 5, - 3, 4 ); logoScene.add( d2 );
+
+				logoRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				logoRenderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
+				logoRenderer.setSize( 1040, 250, false );
+				logoHost.appendChild( logoRenderer.domElement );
+
+				new FontLoader().load( './lib/fonts/helvetiker_bold.typeface.json', ( font ) => {
+
+					const matY = new THREE.MeshStandardMaterial( { color: 0xf2b705, metalness: 0.35, roughness: 0.18 } );
+					const matK = new THREE.MeshStandardMaterial( { color: 0x15120c, metalness: 0.5, roughness: 0.25 } );
+					const matG = new THREE.MeshStandardMaterial( { color: 0x5a564c, metalness: 0.4, roughness: 0.3 } );
+
+					const brand = buildWord( font, 'fabrick', matY, 1.0, 0.32 );
+					const dot = new THREE.Mesh(
+						new THREE.SphereGeometry( 0.075, 12, 12 ),
+						new THREE.MeshStandardMaterial( { color: 0xf2b705, emissive: 0xf2b705, emissiveIntensity: 0.25, roughness: 0.2 } )
+					);
+					const store = buildWord( font, 'Store', matK, 0.62, 0.2 );
+					const tag = buildWord( font, 'aventura', matG, 0.26, 0.09 );
+
+					const gap = 0.26;
+					const totalW = brand.width + gap + 0.3 + gap + store.width;
+					const x0 = - totalW / 2;
+
+					brand.group.position.set( x0, 0.42, 0 );
+					dot.position.set( x0 + brand.width + gap * 0.6, 0.52, 0 );
+					store.group.position.set( x0 + brand.width + gap + 0.3, 0.42, 0 );
+					tag.group.position.set( - tag.width / 2, - 0.62, 0 );
+
+					logoScene.add( brand.group, dot, store.group, tag.group );
+
+					const letters = brand.meshes.concat( store.meshes ).concat( tag.meshes );
+
+					if ( window.gsap ) {
+
+						letters.forEach( ( m, i ) => {
+
+							gsap.from( m.position, { y: - 1.2, duration: 0.9, delay: 0.12 + i * 0.06, ease: 'back.out(1.7)' } );
+							gsap.from( m.rotation, { x: - 1.3, duration: 1.0, delay: 0.12 + i * 0.06, ease: 'power2.out' } );
+							gsap.to( m.position, {
+								y: '+=0.055', duration: 2.4 + ( i % 4 ) * 0.5, yoyo: true, repeat: - 1,
+								ease: 'sine.inOut', delay: 1.2 + i * 0.1
+							} );
+
+						} );
+
+						gsap.from( dot.scale, { scale: 0, duration: 0.5, delay: 0.4, ease: 'back.out(2.5)' } );
+						gsap.from( brand.group.scale, { x: 0.6, y: 0.6, duration: 1.0, delay: 0.15, ease: 'back.out(1.8)' } );
+						gsap.to( brand.group.rotation, { y: 0.13, duration: 3.6, yoyo: true, repeat: - 1, ease: 'sine.inOut', delay: 1.4 } );
+						gsap.to( store.group.rotation, { y: - 0.16, duration: 4.0, yoyo: true, repeat: - 1, ease: 'sine.inOut', delay: 1.7 } );
+						gsap.fromTo( tag.group.position, { y: - 1.0 }, { y: - 0.62, duration: 0.6, delay: 0.8, ease: 'power2.out' } );
+
+					}
+
+				}, undefined, () => { logoHost.classList.add( 'failed' ); } );
+
+			}
+
+			function loadModel() {
+
+				const ktx2 = new KTX2Loader().setTranscoderPath( './lib/basis/' ).detectSupport( renderer );				const draco = new DRACOLoader().setDecoderPath( './lib/draco/gltf/' );
+				const gltf = new GLTFLoader();
+				gltf.setDRACOLoader( draco );
+				gltf.setKTX2Loader( ktx2 );
+
+				gltf.load( './models/CarbonFrameBike.glb', ( gltfResult ) => {
+
+					bike = gltfResult.scene;
+					scene.add( bike );
+
+					let debugMeshes = 0;
+					bike.traverse( ( obj ) => { if ( obj.isMesh ) debugMeshes ++; } );
+					window.__bikeDebug = { loaded: true, meshes: debugMeshes };
+
+					if ( gltfResult.animations.length > 0 ) {
+
+						mixer = new THREE.AnimationMixer( bike );
+						action = mixer.clipAction( gltfResult.animations[ 0 ] );
+						action.setLoop( THREE.LoopRepeat, Infinity );
+						action.timeScale = 0.5;
+						action.play();
+
+					}
+
+					buildPartMaps();
+
+				}, undefined, ( err ) => {
+
+					errBanner.style.display = 'block';
+					errBanner.textContent = 'No se pudo cargar el modelo 3D: ' + err.message;
+
+				} );
+
+			}
+
+			function buildPartMaps() {
+
+				const meshList = [];
+				bike.traverse( ( obj ) => { if ( obj.isMesh ) meshList.push( obj ); } );
+
+				for ( const part of PARTS ) {
+
+					const meshes = [];
+					for ( const mesh of meshList ) {
+
+						if ( meshToPart.has( mesh ) ) continue;
+						let n = mesh;
+						while ( n ) {
+
+							if ( n.name && part.regex.test( n.name ) ) {
+
+								meshes.push( mesh );
+								meshToPart.set( mesh, part );
+								break;
+
+							}
+							n = n.parent;
+
+						}
+
+					}
+					meshesByPart.set( part, meshes );
+
+				}
+
+			}
+
+			function buildWheel() {
+
+				wheelCount.textContent = ITEMS.length + ' secciones';
+				for ( let i = 0; i < ITEMS.length; i ++ ) {
+
+					const el = document.createElement( 'div' );
+					el.className = 'item';
+					el.innerHTML = '<span class="idx">' + String( i + 1 ).padStart( 2, '0' ) + '</span><span class="dot"></span><span>' + ITEMS[ i ].name + '</span>';
+					el.addEventListener( 'click', ( e ) => {
+
+						e.stopPropagation();
+						const off = wheelIndexToItem( i );
+
+						if ( off === 0 ) {
+
+							selectItem( ITEMS[ i ] );
+
+						} else {
+
+							rotateWheel( i );
+
+						}
+
+					} );
+					wheel.appendChild( el );
+					ITEMS[ i ].el = el;
+
+				}
+
+				updateWheel();
+				selectItem( ITEMS[ 0 ], true );
+
+			}
+
+			function wheelIndexToItem( i ) {
+
+				const N = ITEMS.length;
+				let off = ( ( i - wheelIndex ) % N + N ) % N;
+				if ( off > N / 2 ) off -= N;
+				return off;
+
+			}
+
+			function updateWheel() {
+
+				const N = ITEMS.length;
+				for ( let i = 0; i < N; i ++ ) {
+
+					const off = wheelIndexToItem( i );
+					const abs = Math.abs( off );
+					const el = ITEMS[ i ].el;
+					el.style.transform = 'translateY(' + ( off * 56 ) + 'px) scale(' + Math.max( 0.6, 1 - abs * 0.16 ).toFixed( 3 ) + ')';
+					el.style.opacity = abs > 2 ? '0' : String( Math.max( 0.2, 1 - abs * 0.35 ) );
+					el.style.zIndex = String( 10 - abs );
+					el.classList.toggle( 'active', off === 0 );
+
+				}
+
+				if ( window.gsap ) {
+
+					const act = document.querySelector( '#wheel .item.active .dot' );
+					if ( act ) gsap.fromTo( act, { scale: 1.45 }, { scale: 1, duration: 0.5, ease: 'back.out(2.5)' } );
+
+				}
+
+			}
+
+			function rotateWheel( step ) {
+
+				const N = ITEMS.length;
+
+				if ( typeof step === 'number' ) {
+
+					wheelIndex = ( ( wheelIndex + step ) % N + N ) % N;
+
+				} else {
+
+					wheelIndex = step;
+
+				}
+
+				updateWheel();
+				partSound( wheelIndex );
+
+				clearTimeout( wheelTimer );
+				wheelTimer = setTimeout( () => selectItem( ITEMS[ wheelIndex ] ), 350 );
+
+			}
+
+			function selectItem( item, silent ) {
+
+				updateWheel();
+
+				if ( ! silent ) partSound( wheelIndex );
+
+				if ( item !== OVERVIEW ) {
+
+					selectPart( item, true );
+
+				} else {
+
+					if ( selectedPart ) highlightPart( selectedPart, false );
+					selectedPart = null;
+					showInfo( OVERVIEW, 'Visor 3D · fabrick Store' );
+
+				}
+
+			}
+
+			function showInfo( item, kicker ) {
+
+				tabKicker.textContent = kicker;
+				tabName.textContent = item.name;
+				tabDesc.textContent = item.desc;
+				tabSpecs.innerHTML = '';
+				for ( const s of item.specs ) {
+
+					const chip = document.createElement( 'span' );
+					chip.textContent = s;
+					tabSpecs.appendChild( chip );
+
+				}
+				infoTab.classList.add( 'open' );
+				if ( window.gsap ) gsap.fromTo( [ '#infoTab .kicker', '#infoTab h2', '#infoTab .desc', '#infoTab .specs', '#infoTab .buy' ], { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out', stagger: 0.06 } );
+
+			}
+
+			function closeInfoTab() {
+
+				infoTab.classList.remove( 'open' );
+
+			}
+
+			function pickPart( event ) {
+
+				const rect = renderer.domElement.getBoundingClientRect();
+				pointer.x = ( ( event.clientX - rect.left ) / rect.width ) * 2 - 1;
+				pointer.y = - ( ( event.clientY - rect.top ) / rect.height ) * 2 + 1;
+
+				raycaster.setFromCamera( pointer, camera );
+
+				const meshes = [];
+				for ( const m of meshToPart.keys() ) meshes.push( m );
+
+				const hits = raycaster.intersectObjects( meshes, false );
+				if ( hits.length === 0 ) return null;
+				return meshToPart.get( hits[ 0 ].object );
+
+			}
+
+			function onPointerMove( event ) {
+
+				const part = pickPart( event );
+				if ( part !== hoveredPart ) {
+
+					hoveredPart = part;
+					renderer.domElement.style.cursor = part ? 'pointer' : 'grab';
+
+				}
+
+				if ( part ) {
+
+					tooltip.textContent = part.name;
+					tooltip.style.display = 'block';
+					tooltip.style.left = event.clientX + 'px';
+					tooltip.style.top = event.clientY + 'px';
+
+				} else {
+
+					tooltip.style.display = 'none';
+
+				}
+
+			}
+
+			function onPointerDown( event ) {
+
+				const part = pickPart( event );
+				if ( part ) selectPart( part, false );
+				else deselect();
+
+			}
+
+			function selectPart( part, focus ) {
+
+				if ( selectedPart === part ) {
+
+					deselect();
+					return;
+
+				}
+
+				if ( selectedPart ) highlightPart( selectedPart, false );
+
+				selectedPart = part;
+				highlightPart( part, true );
+				partSound( ITEMS.findIndex( i => i === part ) );
+
+				const item = ITEMS.find( i => i === part );
+				if ( item ) {
+
+					wheelIndex = ITEMS.indexOf( item );
+					updateWheel();
+
+				}
+
+				showInfo( item || part, 'Detalle de la pieza' );
+
+				if ( focus ) focusPart( part );
+
+			}
+
+			function deselect() {
+
+				if ( selectedPart ) highlightPart( selectedPart, false );
+				selectedPart = null;
+				closeInfoTab();
+
+			}
+
+			function highlightPart( part, on ) {
+
+				const meshes = meshesByPart.get( part ) || [];
+				for ( const mesh of meshes ) {
+
+					if ( ! mesh.userData.origEmissive ) {
+
+						mesh.userData.origEmissive = mesh.material.emissive.clone();
+						mesh.userData.origEmissiveIntensity = mesh.material.emissiveIntensity;
+						mesh.material = mesh.material.clone();
+						mesh.material.emissive = mesh.userData.origEmissive.clone();
+
+					}
+
+					const mat = mesh.material;
+					if ( on ) {
+
+						mat.emissive.set( 0x0ea5e9 );
+						mat.emissiveIntensity = 0.55;
+
+					} else {
+
+						mat.emissive.copy( mesh.userData.origEmissive );
+						mat.emissiveIntensity = mesh.userData.origEmissiveIntensity;
+
+					}
+
+				}
+
+			}
+
+			function partCenter( part ) {
+
+				const box = new THREE.Box3();
+				for ( const mesh of meshesByPart.get( part ) || [] ) box.expandByObject( mesh );
+				const center = new THREE.Vector3();
+				box.getCenter( center );
+				const size = box.getSize( new THREE.Vector3() ).length();
+				return { center, size };
+
+			}
+
+			function focusPart( part ) {
+
+				const { center, size } = partCenter( part );
+				const dir = camera.position.clone().sub( controls.target ).normalize();
+				if ( dir.lengthSq() < 0.01 ) dir.set( 0, 0, 1 );
+
+				focusAnim.from = controls.target.clone();
+				focusAnim.to = center;
+				focusAnim.fromCam = camera.position.clone();
+				focusAnim.toCam = center.clone().add( dir.multiplyScalar( Math.max( size * 1.4, 1.0 ) ) );
+				focusAnim.t = 0;
+				focusAnim.active = true;
+
+			}
+
+			function goBuy() {
+
+				partSound( 0 );
+				window.open( 'producto.html', '_blank' );
+
+			}
+
+			function onResize() {
+
+				camera.aspect = innerWidth / innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( innerWidth, innerHeight );
+
+			}
+
+			function animate() {
+
+				timer.update();
+				const delta = timer.getDelta();
+
+				if ( mixer ) mixer.update( delta );
+
+				if ( focusAnim.active ) {
+
+					focusAnim.t += delta / 0.9;
+					const t = Math.min( focusAnim.t, 1 );
+					const e = t * t * ( 3 - 2 * t );
+					controls.target.lerpVectors( focusAnim.from, focusAnim.to, e );
+					camera.position.lerpVectors( focusAnim.fromCam, focusAnim.toCam, e );
+					if ( t >= 1 ) focusAnim.active = false;
+
+				}
+
+				controls.update();
+
+				if ( logoRenderer && logoScene ) logoRenderer.render( logoScene, logoCamera );
+
+				renderer.render( scene, camera );
+
+			}
+
+			let audioCtx = null, bgTimerId = null;
+			window.__dbg = () => ( { wheelIndex, items: ITEMS.map( i => ( { name: i.name, hasEl: !!i.el, active: i.el && i.el.classList.contains( 'active' ), opacity: i.el && i.el.style.opacity } ) ) } );
+
+			function ensureAudio() {
+
+				if ( audioCtx ) return;
+				try {
+
+					audioCtx = new ( window.AudioContext || window.webkitAudioContext )();
+					startBackgroundMusic();
+
+				} catch ( e ) { }
+
+			}
+
+			function startBackgroundMusic() {
+
+				const step = 0.26;
+				const arp = [ 220, 261.63, 329.63, 392, 493.88, 587.33, 659.25, 587.33, 493.88, 392, 329.63, 261.63 ];
+				const bass = [ 55, 55, 65.41, 73.42 ];
+				let next = audioCtx.currentTime + 0.1;
+				let idx = 0;
+
+				const schedule = () => {
+
+					while ( next < audioCtx.currentTime + 0.7 ) {
+
+						if ( soundOn ) {
+
+							const t = next;
+
+							const osc = audioCtx.createOscillator();
+							const g = audioCtx.createGain();
+							osc.type = 'triangle';
+							osc.frequency.value = arp[ idx % arp.length ];
+							g.gain.setValueAtTime( 0.0001, t );
+							g.gain.exponentialRampToValueAtTime( 0.035, t + 0.03 );
+							g.gain.exponentialRampToValueAtTime( 0.0001, t + 0.24 );
+							osc.connect( g ).connect( audioCtx.destination );
+							osc.start( t );
+							osc.stop( t + 0.26 );
+
+							if ( idx % 4 === 0 ) {
+
+								const b = audioCtx.createOscillator();
+								const bg = audioCtx.createGain();
+								b.type = 'sine';
+								b.frequency.value = bass[ Math.floor( idx / 4 ) % bass.length ];
+								bg.gain.setValueAtTime( 0.0001, t );
+								bg.gain.exponentialRampToValueAtTime( 0.055, t + 0.04 );
+								bg.gain.exponentialRampToValueAtTime( 0.0001, t + 0.6 );
+								b.connect( bg ).connect( audioCtx.destination );
+								b.start( t );
+								b.stop( t + 0.65 );
+
+							}
+
+						}
+
+						idx ++;
+						next += step;
+
+					}
+
+				};
+
+				schedule();
+				bgTimerId = setInterval( schedule, 220 );
+
+			}
+
+			function partSound( i ) {
+
+				if ( ! audioCtx || ! soundOn ) return;
+				try {
+
+					const t = audioCtx.currentTime;
+					const base = 392 * Math.pow( 2, ( ( i % 12 ) + 3 ) / 12 );
+
+					const osc = audioCtx.createOscillator();
+					const g = audioCtx.createGain();
+					osc.type = 'sine';
+					osc.frequency.value = base;
+					g.gain.setValueAtTime( 0.0001, t );
+					g.gain.exponentialRampToValueAtTime( 0.16, t + 0.012 );
+					g.gain.exponentialRampToValueAtTime( 0.0001, t + 0.13 );
+					osc.connect( g ).connect( audioCtx.destination );
+					osc.start( t );
+					osc.stop( t + 0.15 );
+
+					const o2 = audioCtx.createOscillator();
+					const g2 = audioCtx.createGain();
+					o2.type = 'sine';
+					o2.frequency.value = base * 1.5;
+					g2.gain.setValueAtTime( 0.0001, t );
+					g2.gain.exponentialRampToValueAtTime( 0.09, t + 0.008 );
+					g2.gain.exponentialRampToValueAtTime( 0.0001, t + 0.06 );
+					o2.connect( g2 ).connect( audioCtx.destination );
+					o2.start( t );
+					o2.stop( t + 0.08 );
+
+				} catch ( e ) { }
+
+			}
+
+			function toggleSound() {
+
+				soundOn = ! soundOn;
+				soundBtn.innerHTML = '<i class="fa-solid fa-volume-' + ( soundOn ? 'high' : 'xmark' ) + '"></i>';
+				if ( soundOn ) ensureAudio();
+
+			}
+
+		</script>
+	</body>
+</html>
