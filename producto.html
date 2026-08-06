@@ -3,6 +3,16 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="KRATO Aventuras — Tienda: Carbon Frame Bike y Polo Blanco personalizable en 6 colores. Compra online con checkout seguro.">
+		<meta name="keywords" content="KRATO, Aventuras, tienda, bicicleta, MTB, polo, checkout, comprar">
+		<meta name="author" content="KRATO Aventuras">
+		<meta name="theme-color" content="#111111">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="KRATO Aventuras — Tienda">
+		<meta property="og:description" content="Carbon Frame Bike y Polo Blanco personalizable. Compra segura en línea.">
+		<meta property="og:image" content="./favicon.svg">
+		<meta property="og:url" content="https://thinkfashz.github.io/fabrick-store/producto.html">
+		<meta name="twitter:card" content="summary">
 		<title>KRATO Aventuras - Tienda</title>
 		<link rel="icon" href="favicon.svg" type="image/svg+xml">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -363,7 +373,7 @@
 		<script type="importmap">
 			{
 				"imports": {
-					"three": "./three.module.js?v=4",
+					"three": "./three.module.js?v=5",
 					"three/addons/": "./lib/jsm/"
 				}
 			}
@@ -763,7 +773,7 @@
 			}
 
 			renderColors();
-			applyProduct( 'bike' );
+			applyProduct( new URLSearchParams( location.search ).get( 'prod' ) === 'polo' ? 'polo' : 'bike' );
 			resizeBike();
 			window.addEventListener( 'resize', () => { resizeBike(); resizePolo(); } );
 
