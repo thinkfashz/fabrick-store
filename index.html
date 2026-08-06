@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>fabrick Store · aventura - Carbon Frame Bike</title>
+		<title>KRATO Aventuras - Carbon Frame Bike</title>
 		<link rel="icon" href="favicon.svg" type="image/svg+xml">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +15,9 @@
 				--ink: #111111;
 				--muted: #7a828c;
 				--faint: rgba(17, 17, 17, 0.05);
-				--yellow: #f2b705;
-				--yellow2: #ffd21f;
-				--cyan: #0ea5e9;
+				--yellow: #101418;
+				--yellow2: #3a4149;
+				--cyan: #5a6672;
 				--line: rgba(17, 17, 17, 0.1);
 				--glass: rgba(255, 255, 255, 0.58);
 				--glass-strong: rgba(255, 255, 255, 0.72);
@@ -32,29 +32,24 @@
 			#app canvas { display: block; }
 
 			#wordmark {
-				position: fixed; z-index: 1; pointer-events: none; right: -2vw; bottom: 4vh;
-				font-family: var(--font-display); font-style: italic;
-				font-size: clamp(70px, 14vw, 190px); font-weight: 500; letter-spacing: 0.06em;
-				color: rgba(17, 17, 17, 0.05); text-transform: lowercase; line-height: 1; user-select: none;
-				transform: rotate(-3deg);
+				position: fixed; z-index: 1; pointer-events: none; right: -1vw; bottom: 3vh;
+				font-size: clamp(64px, 11vw, 160px); font-weight: 800; letter-spacing: 0.22em;
+				color: rgba(17, 17, 17, 0.04); text-transform: uppercase; line-height: 1; user-select: none;
+				transform: rotate(-3deg); white-space: nowrap;
 			}
 
 			header {
 				position: fixed; top: 0; left: 0; right: 0; z-index: 20;
-				padding: 20px 26px; pointer-events: none;
+				padding: 22px 28px; pointer-events: none;
 				background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), transparent);
 			}
-			#logo3d {
-				width: min(50vw, 430px); aspect-ratio: 1040 / 250; pointer-events: none;
-				display: block; margin-left: -6px;
+			.logo { pointer-events: auto; display: flex; align-items: center; gap: 16px; width: fit-content; }
+			.logo .l1 { font-size: 27px; font-weight: 800; letter-spacing: 0.34em; color: var(--ink); line-height: 1; }
+			.logo .l2 {
+				font-size: 11px; font-weight: 600; letter-spacing: 0.5em; color: var(--muted);
+				text-transform: uppercase; transform: translateY(1px); white-space: nowrap;
 			}
-			#logo3d canvas { width: 100% !important; height: 100% !important; display: block; }
-			#logo3d .fallback {
-				display: none; font-family: var(--font-display); font-style: italic; font-weight: 700;
-				font-size: 34px; color: var(--yellow); letter-spacing: 0.2px; line-height: 1; padding-top: 26px;
-			}
-			#logo3d.failed canvas { display: none; }
-			#logo3d.failed .fallback { display: block; }
+			.logo .lrule { width: 1px; height: 26px; background: var(--line); }
 
 			#soundBtn {
 				position: fixed; right: 20px; bottom: 20px; z-index: 25;
@@ -71,39 +66,40 @@
 			#soundBtn:active { transform: scale(0.94); }
 
 			#infoTab {
-				position: fixed; top: 84px; right: 22px; z-index: 21; width: min(360px, calc(100vw - 36px));
-				background: var(--glass); border: 1px solid var(--line); border-radius: 20px;
-				padding: 18px 20px; backdrop-filter: blur(22px) saturate(1.6); -webkit-backdrop-filter: blur(22px) saturate(1.6);
+				position: fixed; top: 84px; right: 24px; z-index: 21; width: min(440px, calc(100vw - 44px));
+				background: var(--glass); border: 1px solid var(--line); border-radius: 24px;
+				padding: 26px 28px; backdrop-filter: blur(22px) saturate(1.6); -webkit-backdrop-filter: blur(22px) saturate(1.6);
 				box-shadow: var(--shadow);
 				transform: translateX(calc(100% + 40px)); opacity: 0;
 				transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s;
-				max-height: 62vh; overflow-y: auto;
+				max-height: 70vh; overflow-y: auto;
 			}
 			#infoTab.open { transform: translateX(0); opacity: 1; }
 			#infoTab::-webkit-scrollbar { width: 6px; }
 			#infoTab::-webkit-scrollbar-thumb { background: rgba(17,17,17,0.18); border-radius: 3px; }
 			#infoTab .kicker {
-				font-size: 10.5px; letter-spacing: 3px; text-transform: uppercase; color: var(--yellow);
-				font-weight: 800; margin-bottom: 6px;
+				font-size: 11px; letter-spacing: 3.5px; text-transform: uppercase; color: var(--muted);
+				font-weight: 700; margin-bottom: 8px;
 			}
-			#infoTab h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+			#infoTab h2 { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 			#infoTab h2 .close {
-				background: none; border: 0; color: var(--muted); font-size: 15px; cursor: pointer; padding: 4px 8px; border-radius: 9px;
+				background: none; border: 0; color: var(--muted); font-size: 16px; cursor: pointer; padding: 4px 8px; border-radius: 9px;
 			}
 			#infoTab h2 .close:hover { color: var(--ink); background: rgba(17,17,17,0.06); }
-			#infoTab .desc { font-size: 13px; line-height: 1.65; color: #3a4048; margin-bottom: 12px; }
-			#infoTab .specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+			#infoTab .desc { font-size: 14.5px; line-height: 1.75; color: #3a4048; margin-bottom: 16px; }
+			#infoTab .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
 			#infoTab .specs span {
-				font-size: 11px; color: #4a515a; background: rgba(255, 255, 255, 0.6);
-				border: 1px solid var(--line); padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(8px);
+				font-size: 12px; color: #3f464e; background: rgba(255, 255, 255, 0.65);
+				border: 1px solid var(--line); padding: 6px 13px; border-radius: 22px; backdrop-filter: blur(8px); font-weight: 600;
 			}
 			#infoTab .buy {
-				width: 100%; border: 0; border-radius: 14px; padding: 12px;
-				background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; font-weight: 800; font-size: 14px;
-				cursor: pointer; font-family: inherit; box-shadow: 0 6px 20px rgba(242, 183, 5, 0.4);
+				width: 100%; border: 0; border-radius: 15px; padding: 14px;
+				background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #ffffff; font-weight: 800; font-size: 14.5px;
+				cursor: pointer; font-family: inherit; box-shadow: 0 8px 26px rgba(16, 20, 24, 0.32);
 				transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; justify-content: center; gap: 9px;
 			}
-			#infoTab .buy:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(242, 183, 5, 0.55); background: linear-gradient(135deg, var(--yellow2), #ffe25c); }
+			#infoTab .buy:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(16, 20, 24, 0.42); background: linear-gradient(135deg, var(--yellow2), #2a3037); }
+			#infoTab .buy i { color: rgba(255, 255, 255, 0.9); }
 			#infoTab .buy:active { transform: scale(0.98); }
 
 			#wheelBox {
@@ -142,9 +138,9 @@
 				background: linear-gradient(180deg, var(--yellow2), var(--yellow));
 			}
 			#wheelBox .item.active {
-				background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(242, 183, 5, 0.55);
+				background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(16, 20, 24, 0.4);
 				color: var(--ink); font-weight: 800; font-size: 13px;
-				box-shadow: 0 6px 20px rgba(242, 183, 5, 0.22); backdrop-filter: blur(6px);
+				box-shadow: 0 6px 20px rgba(16, 20, 24, 0.16); backdrop-filter: blur(6px);
 			}
 			#wheelBox .item.active .dot { background: var(--yellow); box-shadow: 0 0 10px rgba(242, 183, 5, 0.8); }
 			#wheelBox .arrows { display: flex; gap: 8px; justify-content: center; margin-top: 10px; pointer-events: auto; }
@@ -157,11 +153,32 @@
 			#wheelBox .arrows button:active { transform: scale(0.95); }
 
 			#hint {
-				position: fixed; right: 22px; bottom: 80px; z-index: 19;
-				font-size: 11.5px; color: var(--muted); text-align: right; line-height: 1.8;
-				background: rgba(255, 255, 255, 0.6); padding: 9px 14px; border-radius: 13px;
+				position: fixed; right: 22px; bottom: 84px; z-index: 19;
+				font-size: 11.5px; color: var(--muted); text-align: right; line-height: 1.9;
+				background: rgba(255, 255, 255, 0.6); padding: 10px 15px; border-radius: 13px;
 				border: 1px solid var(--line); pointer-events: none; backdrop-filter: blur(14px); box-shadow: 0 6px 16px rgba(17, 17, 17, 0.06);
 			}
+
+			#ctlBar {
+				position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 26;
+				display: flex; align-items: center; gap: 4px;
+				background: var(--glass-strong); border: 1px solid var(--line); border-radius: 18px;
+				backdrop-filter: blur(18px) saturate(1.5); -webkit-backdrop-filter: blur(18px) saturate(1.5);
+				box-shadow: var(--shadow); padding: 7px 10px; pointer-events: auto;
+			}
+			#ctlBar button {
+				border: 0; background: transparent; color: var(--muted); padding: 9px 13px; border-radius: 13px; cursor: pointer;
+				font-family: inherit; font-size: 12.5px; font-weight: 700; display: flex; gap: 8px; align-items: center;
+				transition: background 0.15s, color 0.15s, transform 0.1s;
+			}
+			#ctlBar button i { font-size: 13px; }
+			#ctlBar button:hover { background: var(--faint); color: var(--ink); }
+			#ctlBar button:active { transform: scale(0.96); }
+			#ctlBar button.active { background: var(--yellow); color: #ffffff; box-shadow: 0 4px 14px rgba(16, 20, 24, 0.35); }
+			#ctlBar button.active i { color: rgba(255, 255, 255, 0.9); }
+			#ctlBar .sep { width: 1px; height: 24px; background: var(--line); margin: 0 6px; }
+			#ctlBar #btnExplode.active { background: var(--yellow); color: #fff; }
+			#ctlBar #btnExplode.active i { color: rgba(255, 255, 255, 0.9); }
 			#tooltip {
 				position: fixed; z-index: 30; pointer-events: none; display: none;
 				background: rgba(255, 255, 255, 0.92); border: 1px solid var(--yellow);
@@ -176,9 +193,16 @@
 			}
 			@media (max-width: 900px) {
 				header { display: flex; justify-content: center; padding: 16px 12px 8px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.4), transparent); }
-				#logo3d { width: min(86vw, 400px); margin-left: 0; }
+				.logo { gap: 11px; }
+				.logo .l1 { font-size: 22px; letter-spacing: 0.26em; }
+				.logo .l2 { font-size: 9px; letter-spacing: 0.38em; }
+				.logo .lrule { height: 20px; }
 				#wordmark { display: none; }
-				#infoTab { top: 62px; right: 8px; left: auto; width: min(320px, 84vw); max-height: 52vh; padding: 14px 16px; }
+				#ctlBar { position: fixed; top: 70px; left: 8px; right: 8px; bottom: auto; transform: none; justify-content: center; flex-wrap: wrap; padding: 6px 8px; }
+				#ctlBar button { padding: 8px 10px; font-size: 11.5px; gap: 6px; }
+				#ctlBar .lbl { display: none; }
+				#ctlBar .sep { display: none; }
+				#infoTab { top: 132px; right: 8px; left: 8px; width: auto; max-height: 66vh; padding: 18px 20px; }
 				#wheelBox { left: 8px; bottom: 8px; transform: none; width: min(58vw, 235px); }
 				#wheelBox .wheel { height: 205px; }
 				#wheelBox .label { font-size: 9px; letter-spacing: 2px; margin: 0 6px 5px; }
@@ -197,10 +221,14 @@
 	</head>
 	<body>
 		<div id="app"></div>
-		<div id="wordmark">aventura</div>
+		<div id="wordmark">KRATO AVENTURAS</div>
 
 		<header>
-			<div id="logo3d"><span class="fallback">fabrick <span style="color:var(--ink)">Store</span></span></div>
+			<div class="logo" id="appLogo">
+				<span class="l1">KRATO</span>
+				<span class="l2"><i class="fa-solid fa-bicycle"></i> Aventuras</span>
+				<span class="lrule"></span>
+			</div>
 		</header>
 
 		<button id="soundBtn" title="Sonido"><i class="fa-solid fa-volume-high"></i></button>
@@ -222,9 +250,14 @@
 			</div>
 		</div>
 
-		<div id="hint"><i class="fa-solid fa-hand-pointer"></i> Arrastra para girar la bici<br><i class="fa-solid fa-wand-magic-sparkles"></i> Toca una pieza o gira la ruleta</div>
+		<div id="hint"><i class="fa-solid fa-hand-pointer"></i> Gira la bici con el ratón o un dedo<br><i class="fa-solid fa-dice-d6"></i> Explora cada pieza con la ruleta</div>
 		<div id="tooltip"></div>
 		<div id="errBanner"></div>
+
+		<div id="ctlBar">
+			<button id="btnCam" title="Vista frontal"><i class="fa-solid fa-video"></i><span class="lbl">Cámaras</span></button>
+			<button id="btnExplode" title="Desacoplar piezas"><i class="fa-solid fa-arrows-up-down-left-right"></i><span class="lbl">Desacoplar</span></button>
+		</div>
 
 		<script type="importmap">
 			{
@@ -246,8 +279,6 @@
 			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 			import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 			import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
-			import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-			import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 			const PARTS = [
 				{
@@ -348,19 +379,23 @@
 			const tooltip = document.getElementById( 'tooltip' );
 			const errBanner = document.getElementById( 'errBanner' );
 			const soundBtn = document.getElementById( 'soundBtn' );
-			const logoHost = document.getElementById( 'logo3d' );
+			const btnCam = document.getElementById( 'btnCam' );
+			const btnExplode = document.getElementById( 'btnExplode' );
 
 			let camera, scene, renderer, mixer, action, controls, bike;
 			let selectedPart = null;
 			let hoveredPart = null;
 			let soundOn = true;
-			let logoScene = null, logoCamera = null, logoRenderer = null;
+			let exploded = false;
 
 			const timer = new THREE.Timer();
 			const raycaster = new THREE.Raycaster();
 			const pointer = new THREE.Vector2();
 			const meshesByPart = new Map();
 			const meshToPart = new Map();
+			const baseTransforms = new Map();
+			const explodeDirs = new Map();
+			const explodeVectors = new Map();
 			const focusAnim = { active: false, t: 0, from: null, to: null, fromCam: null, toCam: null };
 
 			const ITEMS = [ OVERVIEW, ...PARTS ];
@@ -406,6 +441,8 @@
 				document.getElementById( 'tabBuy' ).addEventListener( 'click', goBuy );
 				document.getElementById( 'wheelUp' ).addEventListener( 'click', ( e ) => { e.stopPropagation(); rotateWheel( - 1 ); } );
 				document.getElementById( 'wheelDown' ).addEventListener( 'click', ( e ) => { e.stopPropagation(); rotateWheel( 1 ); } );
+				btnCam.addEventListener( 'click', nextCam );
+				btnExplode.addEventListener( 'click', toggleExplode );
 
 				wheel.addEventListener( 'wheel', ( e ) => { e.preventDefault(); rotateWheel( e.deltaY > 0 ? 1 : - 1 ); }, { passive: false } );
 
@@ -425,115 +462,14 @@
 				if ( window.gsap ) {
 
 					gsap.fromTo( '#wordmark', { opacity: 0 }, { opacity: 1, duration: 1.6, delay: 0.5, ease: 'power2.out' } );
-					gsap.to( '#wordmark', { y: - 18, duration: 4.2, yoyo: true, repeat: - 1, ease: 'sine.inOut', delay: 1.2 } );
 					gsap.from( '#wheelBox', { y: 30, opacity: 0, duration: 0.9, delay: 0.5, ease: 'power3.out' } );
 					gsap.from( '#hint', { y: 16, opacity: 0, duration: 0.8, delay: 0.65, ease: 'power3.out' } );
+					gsap.from( '#ctlBar', { y: 24, opacity: 0, duration: 0.7, delay: 0.8, ease: 'power3.out' } );
 					gsap.from( '#soundBtn', { scale: 0, opacity: 0, duration: 0.5, delay: 0.75, ease: 'back.out(2)' } );
 
 				}
 
-				initLogo();
-
 			}
-
-						function buildWord( font, text, mat, size, height ) {
-
-				const group = new THREE.Group();
-				const meshes = [];
-				let cursor = 0;
-
-				for ( let i = 0; i < text.length; i ++ ) {
-
-					const ch = text[ i ];
-					if ( ch === ' ' ) { cursor += size * 0.3; continue; }
-
-					const geo = new TextGeometry( ch, {
-						font: font, size: size, height: height,
-						curveSegments: 6,
-						bevelEnabled: true, bevelThickness: 0.035 * size, bevelSize: 0.03 * size, bevelSegments: 3
-					} );
-					geo.computeBoundingBox();
-					const mesh = new THREE.Mesh( geo, mat );
-					mesh.position.x = cursor - geo.boundingBox.min.x;
-					group.add( mesh );
-					meshes.push( mesh );
-					cursor += geo.boundingBox.max.x - geo.boundingBox.min.x + size * 0.05;
-
-				}
-
-				group.updateWorldMatrix( true, true );
-				return { group, meshes, width: cursor - size * 0.05 };
-
-			}
-
-			function initLogo() {
-
-				if ( ! logoHost ) return;
-				logoScene = new THREE.Scene();
-				logoCamera = new THREE.OrthographicCamera( - 5.2, 5.2, 1.25, - 1.25, 0.1, 50 );
-				logoCamera.position.z = 12;
-
-				logoScene.add( new THREE.AmbientLight( 0xffffff, 1.5 ) );
-				const d1 = new THREE.DirectionalLight( 0xffffff, 2.0 ); d1.position.set( 4, 6, 6 ); logoScene.add( d1 );
-				const d2 = new THREE.DirectionalLight( 0xfff3c4, 1.0 ); d2.position.set( - 5, - 3, 4 ); logoScene.add( d2 );
-
-				logoRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-				logoRenderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
-				logoRenderer.setSize( 1040, 250, false );
-				logoHost.appendChild( logoRenderer.domElement );
-
-				new FontLoader().load( './lib/fonts/helvetiker_bold.typeface.json', ( font ) => {
-
-					const matY = new THREE.MeshStandardMaterial( { color: 0xf2b705, metalness: 0.35, roughness: 0.18 } );
-					const matK = new THREE.MeshStandardMaterial( { color: 0x15120c, metalness: 0.5, roughness: 0.25 } );
-					const matG = new THREE.MeshStandardMaterial( { color: 0x5a564c, metalness: 0.4, roughness: 0.3 } );
-
-					const brand = buildWord( font, 'fabrick', matY, 1.0, 0.32 );
-					const dot = new THREE.Mesh(
-						new THREE.SphereGeometry( 0.075, 12, 12 ),
-						new THREE.MeshStandardMaterial( { color: 0xf2b705, emissive: 0xf2b705, emissiveIntensity: 0.25, roughness: 0.2 } )
-					);
-					const store = buildWord( font, 'Store', matK, 0.62, 0.2 );
-					const tag = buildWord( font, 'aventura', matG, 0.26, 0.09 );
-
-					const gap = 0.26;
-					const totalW = brand.width + gap + 0.3 + gap + store.width;
-					const x0 = - totalW / 2;
-
-					brand.group.position.set( x0, 0.42, 0 );
-					dot.position.set( x0 + brand.width + gap * 0.6, 0.52, 0 );
-					store.group.position.set( x0 + brand.width + gap + 0.3, 0.42, 0 );
-					tag.group.position.set( - tag.width / 2, - 0.62, 0 );
-
-					logoScene.add( brand.group, dot, store.group, tag.group );
-
-					const letters = brand.meshes.concat( store.meshes ).concat( tag.meshes );
-
-					if ( window.gsap ) {
-
-						letters.forEach( ( m, i ) => {
-
-							gsap.from( m.position, { y: - 1.2, duration: 0.9, delay: 0.12 + i * 0.06, ease: 'back.out(1.7)' } );
-							gsap.from( m.rotation, { x: - 1.3, duration: 1.0, delay: 0.12 + i * 0.06, ease: 'power2.out' } );
-							gsap.to( m.position, {
-								y: '+=0.055', duration: 2.4 + ( i % 4 ) * 0.5, yoyo: true, repeat: - 1,
-								ease: 'sine.inOut', delay: 1.2 + i * 0.1
-							} );
-
-						} );
-
-						gsap.from( dot.scale, { scale: 0, duration: 0.5, delay: 0.4, ease: 'back.out(2.5)' } );
-						gsap.from( brand.group.scale, { x: 0.6, y: 0.6, duration: 1.0, delay: 0.15, ease: 'back.out(1.8)' } );
-						gsap.to( brand.group.rotation, { y: 0.13, duration: 3.6, yoyo: true, repeat: - 1, ease: 'sine.inOut', delay: 1.4 } );
-						gsap.to( store.group.rotation, { y: - 0.16, duration: 4.0, yoyo: true, repeat: - 1, ease: 'sine.inOut', delay: 1.7 } );
-						gsap.fromTo( tag.group.position, { y: - 1.0 }, { y: - 0.62, duration: 0.6, delay: 0.8, ease: 'power2.out' } );
-
-					}
-
-				}, undefined, () => { logoHost.classList.add( 'failed' ); } );
-
-			}
-
 			function loadModel() {
 
 				const ktx2 = new KTX2Loader().setTranscoderPath( './lib/basis/' ).detectSupport( renderer );				const draco = new DRACOLoader().setDecoderPath( './lib/draco/gltf/' );
@@ -596,8 +532,136 @@
 
 						}
 
+}
+				meshesByPart.set( part, meshes );
+
+			}
+
+			bike.updateMatrixWorld( true );
+			const bikeCenter = new THREE.Vector3( 0, 0.7, 0 );
+			for ( const part of PARTS ) {
+
+				const meshes = meshesByPart.get( part ) || [];
+				if ( ! meshes.length ) continue;
+
+				const box = new THREE.Box3();
+				for ( const mesh of meshes ) box.expandByObject( mesh );
+				const c = new THREE.Vector3();
+				box.getCenter( c );
+
+				const dir = c.sub( bikeCenter ).normalize();
+				if ( dir.lengthSq() < 1e-4 ) dir.set( 0.6, 0.2, 0.8 );
+				explodeDirs.set( part, dir );
+
+			}
+
+		}
+
+			const DSL = 0.82;
+
+			function toggleExplode() {
+
+				if ( ! bike ) return;
+
+				exploded = ! exploded;
+				btnExplode.classList.toggle( 'active', exploded );
+
+				if ( exploded ) {
+
+					if ( action ) action.paused = true;
+					explodeBike();
+
+				} else {
+
+					if ( action ) action.paused = false;
+					resetBike();
+
+				}
+
+			}
+
+			function explodeBike() {
+
+				if ( baseTransforms.size === 0 ) {
+
+					for ( const part of PARTS ) {
+
+						for ( const mesh of meshesByPart.get( part ) || [] ) baseTransforms.set( mesh, mesh.position.clone() );
+
 					}
-					meshesByPart.set( part, meshes );
+
+				}
+
+				for ( const part of PARTS ) {
+
+					const dir = explodeDirs.get( part );
+					if ( ! dir ) continue;
+
+					for ( const mesh of meshesByPart.get( part ) || [] ) {
+
+						const base = baseTransforms.get( mesh );
+						if ( ! base ) continue;
+
+						if ( window.gsap ) {
+
+							gsap.to( mesh.position, { x: base.x + dir.x * DSL, y: base.y + dir.y * DSL, z: base.z + dir.z * DSL, duration: 0.9, ease: 'power3.out' } );
+
+						} else {
+
+							mesh.position.set( base.x + dir.x * DSL, base.y + dir.y * DSL, base.z + dir.z * DSL );
+
+						}
+
+					}
+
+				}
+
+			}
+
+			function resetBike() {
+
+				for ( const [ mesh, base ] of baseTransforms ) {
+
+					if ( window.gsap ) {
+
+						gsap.to( mesh.position, { x: base.x, y: base.y, z: base.z, duration: 0.8, ease: 'back.out(1.6)' } );
+
+					} else {
+
+						mesh.position.copy( base );
+
+					}
+
+				}
+
+				baseTransforms.clear();
+
+			}
+
+			let camIdx = 0;
+			const CAM_PRESETS = [
+				{ pos: [ - 2.5, 1.6, 3.0 ], tgt: [ 0, 0.7, 0 ] },
+				{ pos: [ 2.6, 1.7, 2.9 ], tgt: [ 0, 0.7, 0 ] },
+				{ pos: [ 0.6, 2.6, - 3.4 ], tgt: [ 0, 0.7, 0 ] },
+				{ pos: [ - 3.6, 1.5, - 2.2 ], tgt: [ 0, 0.7, 0 ] },
+				{ pos: [ 0.2, 4.2, 0.6 ], tgt: [ 0, 0.7, 0 ] }
+			];
+
+			function nextCam() {
+
+				camIdx = ( camIdx + 1 ) % CAM_PRESETS.length;
+				const p = CAM_PRESETS[ camIdx ];
+				const d = camera.position.distanceTo( controls.target );
+
+				if ( window.gsap ) {
+
+					gsap.to( camera.position, { x: p.pos[ 0 ], y: p.pos[ 1 ], z: p.pos[ 2 ], duration: 1.4, ease: 'power2.inOut' } );
+					gsap.to( controls.target, { x: p.tgt[ 0 ], y: p.tgt[ 1 ], z: p.tgt[ 2 ], duration: 1.4, ease: 'power2.inOut' } );
+
+				} else {
+
+					camera.position.set( p.pos[ 0 ], p.pos[ 1 ], p.pos[ 2 ] );
+					controls.target.set( p.tgt[ 0 ], p.tgt[ 1 ], p.tgt[ 2 ] );
 
 				}
 
@@ -706,7 +770,7 @@
 
 					if ( selectedPart ) highlightPart( selectedPart, false );
 					selectedPart = null;
-					showInfo( OVERVIEW, 'Visor 3D · fabrick Store' );
+					showInfo( OVERVIEW, 'Visor 3D · KRATO Aventuras' );
 
 				}
 
@@ -914,8 +978,6 @@
 				}
 
 				controls.update();
-
-				if ( logoRenderer && logoScene ) logoRenderer.render( logoScene, logoCamera );
 
 				renderer.render( scene, camera );
 

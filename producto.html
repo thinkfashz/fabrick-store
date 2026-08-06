@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>fabrick Store · aventura - Carbon Frame Bike</title>
+		<title>KRATO Aventuras - Tienda</title>
 		<link rel="icon" href="favicon.svg" type="image/svg+xml">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,12 +35,12 @@
 			header .logo { display: flex; align-items: baseline; gap: 16px; }
 			.brand { display: flex; align-items: center; gap: 9px; font-size: 26px; line-height: 1; }
 			.brand .y {
-				font-family: var(--font-display); font-style: italic; font-weight: 700; color: var(--yellow);
-				text-shadow: 0 2px 18px rgba(242, 183, 5, 0.3);
+				font-family: var(--font-display); font-style: italic; font-weight: 700; color: var(--ink);
+				text-shadow: none;
 			}
-			.brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); display: inline-block; box-shadow: 0 0 10px rgba(242, 183, 5, 0.8); }
+			.brand .dot { background: var(--ink); box-shadow: none; }
 			header h1 { font-size: 21px; font-weight: 700; display: inline; }
-			.tag { font-family: var(--font-display); font-style: italic; font-size: 12px; letter-spacing: 5px; text-transform: lowercase; }
+			.tag { font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 			header .headRight { display: flex; gap: 10px; align-items: center; }
 			header a.back {
 				color: var(--ink); text-decoration: none; font-size: 13px; padding: 10px 15px;
@@ -264,8 +264,8 @@
 		<header>
 			<div class="logo">
 				<div>
-					<div class="brand"><span class="y">fabrick</span><span class="dot"></span><h1 style="display:inline">Store</h1></div>
-					<div class="tag">aventura</div>
+<div class="brand"><span class="y">KRATO</span><span class="dot"></span><h1 style="display:inline">Aventuras</h1></div>
+				<div class="tag">Tienda</div>
 				</div>
 			</div>
 			<div class="headRight">
@@ -320,7 +320,7 @@
 			<div class="grid" id="grid"></div>
 		</section>
 
-		<footer><span class="y">fabrick</span> Store · aventura — Visor 3D con three.js + GSAP · Bicicleta: prefrontalcortex (Sketchfab) · Polo: mayatexGT (Sketchfab)</footer>
+		<footer><span class="y">KRATO</span> Aventuras — Visor 3D con three.js + GSAP · Bicicleta: prefrontalcortex (Sketchfab) · Polo: mayatexGT (Sketchfab)</footer>
 		<div id="toast">Añadido al carrito ✓</div>
 
 		<div class="modalBg" id="coBg">
@@ -539,7 +539,7 @@
 				$('viewerBadge').textContent = id === 'bike' ? 'Vista 3D en vivo' : 'Modelo original (Sketchfab)';
 				buildSpecs( P.specs );
 				$('specsTitle').textContent = 'Especificaciones · ' + P.name;
-				document.title = 'fabrick Store · aventura - ' + P.name;
+				document.title = 'KRATO Aventuras - ' + P.name;
 
 				if ( window.gsap ) gsap.fromTo( [ '#bcTitle', '#bcSub', '#bcPrice', '#bcFeat', '#buyCol .row' ],
 					{ y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.05, ease: 'power3.out' } );
