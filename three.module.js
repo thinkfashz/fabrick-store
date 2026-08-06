@@ -1,2 +1,2 @@
 // dev build
-export * from '../src/Three.js';
+export * from './src/Three.js';

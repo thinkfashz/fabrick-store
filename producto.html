@@ -28,118 +28,235 @@
 			* { box-sizing: border-box; margin: 0; }
 			body { background: var(--bg); color: var(--ink); font-family: var(--font-body); min-height: 100vh; }
 			header {
-				display: flex; align-items: center; justify-content: space-between;
-				padding: 16px 26px; border-bottom: 1px solid var(--line);
-				position: sticky; top: 0; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); z-index: 10;
+				display: flex; align-items: center; justify-content: space-between; gap: 12px;
+				padding: 14px 26px; border-bottom: 1px solid var(--line);
+				position: sticky; top: 0; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(16px); z-index: 10;
 			}
 			header .logo { display: flex; align-items: baseline; gap: 16px; }
-			.brand { display: flex; align-items: center; gap: 9px; font-size: 28px; line-height: 1; }
+			.brand { display: flex; align-items: center; gap: 9px; font-size: 26px; line-height: 1; }
 			.brand .y {
 				font-family: var(--font-display); font-style: italic; font-weight: 700; color: var(--yellow);
 				text-shadow: 0 2px 18px rgba(242, 183, 5, 0.3);
 			}
-			.brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); display: inline-block; }
-			header h1 { font-size: 22px; font-weight: 700; display: inline; }
+			.brand .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--yellow); display: inline-block; box-shadow: 0 0 10px rgba(242, 183, 5, 0.8); }
+			header h1 { font-size: 21px; font-weight: 700; display: inline; }
 			.tag { font-family: var(--font-display); font-style: italic; font-size: 12px; letter-spacing: 5px; text-transform: lowercase; }
+			header .headRight { display: flex; gap: 10px; align-items: center; }
 			header a.back {
 				color: var(--ink); text-decoration: none; font-size: 13px; padding: 10px 15px;
 				border: 1px solid var(--line); border-radius: 13px; background: var(--glass-strong); transition: transform 0.15s, box-shadow 0.15s; font-weight: 600;
-				backdrop-filter: blur(14px);
+				backdrop-filter: blur(14px); white-space: nowrap;
 			}
 			header a.back:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 			header a.back i { color: var(--yellow); margin-right: 7px; }
-
-			#hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 34px; padding: 34px 26px 20px; max-width: 1180px; margin: 0 auto; }
-			#viewerWrap {
-				position: relative; border-radius: 22px; overflow: hidden;
-				border: 1px solid var(--line); background: linear-gradient(160deg, #f7f9fb, #eef1f5); min-height: 460px; box-shadow: var(--shadow);
-			}
-			#viewerWrap canvas { display: block; width: 100%; height: 100%; }
-			#viewerWrap .badge {
-				position: absolute; top: 14px; left: 14px; z-index: 5;
-				background: var(--yellow); color: #1a1300; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
-				padding: 6px 12px; border-radius: 20px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(242, 183, 5, 0.35);
-			}
-			#viewerWrap .spin {
-				position: absolute; bottom: 12px; right: 14px; z-index: 5;
-				font-size: 11px; color: var(--muted); background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
-				padding: 5px 11px; border-radius: 20px; border: 1px solid var(--line);
-			}
-			#viewerWrap .spin i { color: var(--yellow); margin-right: 5px; }
-
-			#buyCol { display: flex; flex-direction: column; gap: 14px; }
-			#buyCol .crumb { font-size: 12px; color: var(--muted); }
-			#buyCol .crumb a { color: var(--yellow); text-decoration: none; font-weight: 700; }
-			#buyCol h2 { font-size: 30px; font-weight: 800; line-height: 1.15; color: var(--ink); }
-			#buyCol h2 em { font-family: var(--font-display); font-style: italic; color: var(--yellow); font-weight: 700; }
-			#buyCol .sub { color: var(--muted); font-size: 14px; line-height: 1.6; }
-			#buyCol .price { font-size: 34px; font-weight: 800; color: var(--ink); }
-			#buyCol .price em { color: var(--yellow); font-style: normal; }
-			#buyCol .price small { font-size: 14px; color: var(--muted); font-weight: 400; }
-			#buyCol .stars { color: var(--yellow); font-size: 15px; letter-spacing: 2px; }
-			#buyCol .stars small { color: var(--muted); font-size: 12px; letter-spacing: 0; }
-			#buyCol .features { list-style: none; display: grid; gap: 9px; }
-			#buyCol .features li { font-size: 13px; color: #3a4048; display: flex; gap: 10px; align-items: flex-start; }
-			#buyCol .features li::before { content: '✦'; color: var(--yellow); flex: none; }
-			#buyCol .row { display: flex; gap: 10px; flex-wrap: wrap; }
-			#buyCol .row button {
-				flex: 1; min-width: 170px; border-radius: 14px; padding: 14px 18px; font-size: 14.5px;
-				font-weight: 800; cursor: pointer; font-family: inherit; border: 0; transition: transform 0.15s, box-shadow 0.15s;
-				display: flex; align-items: center; justify-content: center; gap: 9px;
-			}
-			#buyCol .row .add {
-				background: var(--glass-strong); color: var(--ink); border: 1px solid var(--line); backdrop-filter: blur(14px);
-				box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07);
-			}
-			#buyCol .row .add i { color: var(--yellow); }
-			#buyCol .row .now { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; box-shadow: 0 8px 26px rgba(242, 183, 5, 0.45); }
-			#buyCol .row .now:hover { background: linear-gradient(135deg, var(--yellow2), #ffe25c); }
-			#buyCol .row button:hover { transform: translateY(-2px); }
-			#buyCol .row button:active { transform: scale(0.98); }
 			#cartPill {
-				position: fixed; top: 14px; right: 168px; z-index: 15;
 				background: var(--glass-strong); border: 1px solid var(--line); color: var(--ink);
 				padding: 10px 14px; border-radius: 13px; font-size: 13px; display: flex; gap: 8px; align-items: center;
-				box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07); font-weight: 600; backdrop-filter: blur(14px);
+				box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07); font-weight: 600; backdrop-filter: blur(14px); cursor: pointer; white-space: nowrap;
 			}
 			#cartPill i { color: var(--yellow); }
 			#cartPill .n {
 				background: var(--yellow); color: #1a1300; border-radius: 50%; min-width: 20px; height: 20px;
 				display: grid; place-items: center; font-size: 11px; font-weight: 800;
 			}
+
+			#prodTabs { display: flex; gap: 8px; padding: 22px 26px 0; max-width: 1180px; margin: 0 auto; flex-wrap: wrap; }
+			#prodTabs .tab {
+				border: 1px solid var(--line); background: var(--glass-strong); color: var(--muted);
+				border-radius: 15px; padding: 12px 18px; font-size: 13.5px; font-weight: 700; cursor: pointer; font-family: inherit;
+				backdrop-filter: blur(14px); transition: all 0.2s; display: flex; gap: 9px; align-items: center;
+			}
+			#prodTabs .tab i { color: var(--yellow); }
+			#prodTabs .tab:hover { transform: translateY(-2px); box-shadow: var(--shadow); color: var(--ink); }
+			#prodTabs .tab.active { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; border-color: transparent; box-shadow: 0 8px 24px rgba(242, 183, 5, 0.4); }
+			#prodTabs .tab.active i { color: #1a1300; }
+
+			#hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 34px; padding: 22px 26px 20px; max-width: 1180px; margin: 0 auto; }
+			#viewerWrap {
+				position: relative; border-radius: 22px; overflow: hidden;
+				border: 1px solid var(--line); background: linear-gradient(160deg, #f7f9fb, #eef1f5); min-height: 480px; box-shadow: var(--shadow);
+			}
+			#bikeView, #poloView { position: absolute; inset: 0; }
+			#viewerWrap canvas { display: block; width: 100%; height: 100%; }
+			#viewerWrap .badge {
+				position: absolute; top: 14px; left: 14px; z-index: 6;
+				background: var(--yellow); color: #1a1300; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+				padding: 6px 12px; border-radius: 20px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(242, 183, 5, 0.35);
+			}
+			#viewerWrap .spin {
+				position: absolute; bottom: 12px; right: 14px; z-index: 6;
+				font-size: 11px; color: var(--muted); background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px);
+				padding: 5px 11px; border-radius: 20px; border: 1px solid var(--line);
+			}
+			#viewerWrap .spin i { color: var(--yellow); margin-right: 5px; }
+			.poloModes {
+				position: absolute; top: 12px; right: 12px; z-index: 6; display: flex; gap: 6px;
+			}
+			.poloModes button {
+				border: 1px solid var(--line); background: rgba(255, 255, 255, 0.75); color: var(--muted); cursor: pointer;
+				border-radius: 12px; padding: 7px 12px; font-size: 11.5px; font-weight: 700; font-family: inherit;
+				backdrop-filter: blur(10px); transition: all 0.2s; display: flex; gap: 6px; align-items: center;
+			}
+			.poloModes button i { color: var(--yellow); }
+			.poloModes button:hover { color: var(--ink); }
+			.poloModes button.active { background: var(--yellow); color: #1a1300; border-color: transparent; }
+			.poloModes button.active i { color: #1a1300; }
+			#poloFrame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+			#buyCol { display: flex; flex-direction: column; gap: 13px; }
+			#buyCol .crumb { font-size: 12px; color: var(--muted); }
+			#buyCol .crumb a { color: var(--yellow); text-decoration: none; font-weight: 700; }
+			#buyCol h2 { font-size: 29px; font-weight: 800; line-height: 1.15; color: var(--ink); }
+			#buyCol h2 em { font-family: var(--font-display); font-style: italic; color: var(--yellow); font-weight: 700; }
+			#buyCol .sub { color: var(--muted); font-size: 14px; line-height: 1.6; }
+			#buyCol .price { font-size: 33px; font-weight: 800; color: var(--ink); }
+			#buyCol .price em { color: var(--yellow); font-style: normal; }
+			#buyCol .price small { font-size: 14px; color: var(--muted); font-weight: 400; }
+			#buyCol .stars { color: var(--yellow); font-size: 15px; letter-spacing: 2px; }
+			#buyCol .stars small { color: var(--muted); font-size: 12px; letter-spacing: 0; }
+			#buyCol .features { list-style: none; display: grid; gap: 8px; }
+			#buyCol .features li { font-size: 13px; color: #3a4048; display: flex; gap: 10px; align-items: flex-start; }
+			#buyCol .features li::before { content: '✦'; color: var(--yellow); flex: none; }
+
+			#colorSel { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+			#colorSel .lbl { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+			#colorSel .sw {
+				width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(17, 17, 17, 0.12); cursor: pointer;
+				transition: transform 0.15s, box-shadow 0.15s; position: relative;
+			}
+			#colorSel .sw:hover { transform: scale(1.12); }
+			#colorSel .sw.active { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.45); }
+			#colorSel .sw.active::after {
+				content: ''; position: absolute; inset: 6px; border-radius: 50%; background: #fff; mix-blend-mode: difference;
+			}
+			#colorName { font-size: 12.5px; font-weight: 700; color: var(--yellow); }
+
+			#buyCol .trust { display: flex; gap: 12px; flex-wrap: wrap; }
+			#buyCol .trust span {
+				font-size: 11.5px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 6px;
+				background: var(--glass); border: 1px solid var(--line); padding: 7px 11px; border-radius: 20px; backdrop-filter: blur(10px);
+			}
+			#buyCol .trust span i { color: var(--yellow); }
+
+			#buyCol .row { display: flex; gap: 10px; flex-wrap: wrap; }
+			#buyCol .row button {
+				flex: 1; min-width: 170px; border-radius: 14px; padding: 14px 18px; font-size: 14.5px;
+				font-weight: 800; cursor: pointer; font-family: inherit; border: 0; transition: transform 0.15s, box-shadow 0.15s;
+				display: flex; align-items: center; justify-content: center; gap: 9px;
+			}
+			#buyCol .row .add { background: var(--glass-strong); color: var(--ink); border: 1px solid var(--line); backdrop-filter: blur(14px); box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07); }
+			#buyCol .row .add i { color: var(--yellow); }
+			#buyCol .row .now { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; box-shadow: 0 8px 26px rgba(242, 183, 5, 0.45); }
+			#buyCol .row .now:hover { background: linear-gradient(135deg, var(--yellow2), #ffe25c); }
+			#buyCol .row button:hover { transform: translateY(-2px); }
+			#buyCol .row button:active { transform: scale(0.98); }
+
+			#specs { padding: 10px 26px 40px; max-width: 1180px; margin: 0 auto; }
+			#specs h3 { font-size: 15px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin: 28px 0 14px; display: flex; align-items: center; gap: 10px; }
+			#specs h3::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+			#specs .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+			#specs .card {
+				background: var(--glass); border: 1px solid var(--line); border-radius: 17px; padding: 15px 17px;
+				transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+				backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
+				display: grid; grid-template-columns: auto 1fr; column-gap: 13px; row-gap: 3px; align-items: center;
+			}
+			#specs .card:hover { transform: translateY(-3px); border-color: rgba(242, 183, 5, 0.5); box-shadow: var(--shadow); }
+			#specs .card .ic {
+				grid-row: 1 / 3; width: 44px; height: 44px; border-radius: 13px;
+				background: linear-gradient(135deg, rgba(242, 183, 5, 0.18), rgba(242, 183, 5, 0.06));
+				border: 1px solid rgba(242, 183, 5, 0.3); display: grid; place-items: center;
+			}
+			#specs .card .ic i { color: var(--yellow); font-size: 17px; }
+			#specs .card .k { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 800; }
+			#specs .card .v { font-size: 14.5px; font-weight: 800; color: var(--ink); }
+			#specs .card .d { grid-column: 1 / -1; font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+
 			#toast {
 				position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-				z-index: 20; background: var(--yellow); color: #1a1300; font-weight: 800;
+				z-index: 40; background: var(--yellow); color: #1a1300; font-weight: 800;
 				padding: 13px 24px; border-radius: 14px; font-size: 13.5px; opacity: 0;
 				transition: all 0.3s; pointer-events: none; box-shadow: var(--shadow);
 			}
 			#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-			#specs { padding: 10px 26px 40px; max-width: 1180px; margin: 0 auto; }
-			#specs h3 { font-size: 15px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin: 30px 0 16px; }
-			#specs .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-			#specs .card {
-				background: var(--glass); border: 1px solid var(--line); border-radius: 16px; padding: 16px 17px;
-				transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
-				backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
+			.modalBg {
+				position: fixed; inset: 0; background: rgba(17, 17, 17, 0.5); backdrop-filter: blur(6px);
+				z-index: 50; display: none; align-items: center; justify-content: center; padding: 16px;
 			}
-			#specs .card:hover { transform: translateY(-3px); border-color: rgba(242, 183, 5, 0.5); box-shadow: var(--shadow); }
-			#specs .card h4 { font-size: 13.5px; margin-bottom: 7px; color: var(--ink); }
-			#specs .card p { font-size: 12px; color: var(--muted); line-height: 1.55; margin-bottom: 9px; }
-			#specs .card .chips { display: flex; flex-wrap: wrap; gap: 5px; }
-			#specs .card .chips span {
-				font-size: 10.5px; padding: 3px 8px; border-radius: 20px;
-				background: rgba(242, 183, 5, 0.14); border: 1px solid rgba(242, 183, 5, 0.35); color: #594200; font-weight: 700;
+			.modalBg.open { display: flex; }
+			.modalCard {
+				background: #fff; border-radius: 22px; padding: 26px; width: min(480px, 100%); max-height: 90vh;
+				overflow-y: auto; box-shadow: var(--shadow);
 			}
+			.modalCard h3 { font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+			.modalCard h3 i { color: var(--yellow); }
+			.modalCard .sub { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+			#coLines { list-style: none; display: grid; gap: 8px; margin-bottom: 14px; }
+			#coLines li {
+				display: flex; justify-content: space-between; gap: 10px; font-size: 13.5px;
+				background: var(--faint); border: 1px solid var(--line); border-radius: 12px; padding: 10px 13px;
+			}
+			#coLines li b { color: var(--yellow); white-space: nowrap; }
+			.coTotal {
+				display: flex; justify-content: space-between; font-size: 16px; font-weight: 800;
+				border-top: 1px dashed var(--line); padding: 13px 0; margin-bottom: 14px;
+			}
+			.coTotal span { color: var(--yellow); }
+			.field { margin-bottom: 10px; }
+			.field input, .field select {
+				width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
+				font-family: inherit; font-size: 13.5px; background: #fbfcfe; transition: border-color 0.15s, box-shadow 0.15s;
+			}
+			.field input:focus, .field select:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.2); }
+			.field.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+			.field.bad input { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15); }
+			.coErr { font-size: 12px; color: #dc2626; font-weight: 600; margin: -4px 0 10px; display: none; }
+			.coErr.show { display: block; }
+			.modalCard .primary {
+				width: 100%; border: 0; border-radius: 14px; padding: 14px; font-size: 14.5px; font-weight: 800; cursor: pointer;
+				background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; font-family: inherit;
+				box-shadow: 0 8px 26px rgba(242, 183, 5, 0.4); display: flex; align-items: center; justify-content: center; gap: 9px;
+				transition: transform 0.15s, box-shadow 0.15s;
+			}
+			.modalCard .primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(242, 183, 5, 0.55); }
+			.modalCard .ghost {
+				width: 100%; margin-top: 8px; border: 1px solid var(--line); border-radius: 14px; padding: 11px;
+				font-size: 13px; font-weight: 700; cursor: pointer; background: #fff; color: var(--muted); font-family: inherit;
+			}
+			.modalCard .ghost:hover { color: var(--ink); }
+			.lockWrap {
+				width: 76px; height: 76px; border-radius: 50%; margin: 4px auto 16px;
+				background: linear-gradient(135deg, var(--yellow), var(--yellow2));
+				display: grid; place-items: center; box-shadow: 0 12px 34px rgba(242, 183, 5, 0.5);
+			}
+			.lockWrap i { font-size: 32px; color: #1a1300; }
+			#secureCard { text-align: center; }
+			#secureCard h3 { justify-content: center; font-size: 22px; }
+			#secureCard p { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+			#secureCard p b { color: var(--ink); }
+			.secBadges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+			.secBadges span {
+				font-size: 11px; font-weight: 700; color: var(--muted); display: flex; align-items: center; gap: 6px;
+				background: var(--faint); border: 1px solid var(--line); padding: 7px 11px; border-radius: 20px;
+			}
+			.secBadges span i { color: var(--yellow); }
+			#secOk { width: 100%; }
+
 			footer { text-align: center; padding: 22px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
 			footer .y { font-family: var(--font-display); font-style: italic; color: var(--yellow); }
+
 			@media (max-width: 900px) {
 				#hero { grid-template-columns: 1fr; }
 				#viewerWrap { min-height: 320px; }
-				header { flex-wrap: wrap; gap: 10px; }
+				header { flex-wrap: wrap; }
 				header a.back { padding: 9px 12px; }
-				#cartPill { position: static; }
+				#cartPill { padding: 9px 12px; }
 				header .logo { flex-direction: column; align-items: flex-start; gap: 3px; }
+				#prodTabs { padding: 16px 12px 0; }
+				#prodTabs .tab { flex: 1; justify-content: center; padding: 11px 8px; font-size: 12px; }
+				#specs .grid { grid-template-columns: 1fr; }
+				.field.row2 { grid-template-columns: 1fr; }
 			}
 		</style>
 	</head>
@@ -151,33 +268,46 @@
 					<div class="tag">aventura</div>
 				</div>
 			</div>
-			<div style="display:flex;gap:10px;align-items:center">
+			<div class="headRight">
 				<div id="cartPill"><i class="fa-solid fa-cart-shopping"></i> Carrito: <span class="n">0</span></div>
-				<a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i>Volver al visor 3D</a>
+				<a class="back" href="index.html"><i class="fa-solid fa-arrow-left"></i>Visor 3D</a>
 			</div>
 		</header>
 
+		<div id="prodTabs">
+			<button class="tab active" data-prod="bike"><i class="fa-solid fa-person-biking"></i> Bicicleta</button>
+			<button class="tab" data-prod="polo"><i class="fa-solid fa-shirt"></i> Polo Blanco</button>
+		</div>
+
 		<section id="hero">
 			<div id="viewerWrap">
-				<div class="badge">Vista 3D en vivo</div>
-				<div class="spin">⟳ rotación automática</div>
+				<div class="badge" id="viewerBadge">Vista 3D en vivo</div>
+				<div class="spin" id="viewerSpin"><i class="fa-solid fa-rotate-right"></i> rotación automática</div>
+				<div id="bikeView"></div>
+				<div id="poloView" style="display:none">
+					<div class="poloModes">
+						<button class="pMode active" data-mode="frame"><i class="fa-solid fa-cube"></i> Original</button>
+						<button class="pMode" data-mode="color"><i class="fa-solid fa-palette"></i> Color 3D</button>
+					</div>
+					<div id="poloFrame" style="position:absolute;inset:0;display:block">
+						<iframe title="Modelo 3D: Polo Blanco" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b9a8a1f8de3e4b0fa73e9ac3341c3c15/embed?autospin=1&autostart=1&preload=1&transparent=1"></iframe>
+					</div>
+					<div id="polo3d" style="position:absolute;inset:0;display:none"></div>
+				</div>
 			</div>
 			<div id="buyCol">
 				<div class="crumb"><a href="index.html">Visor 3D</a> / Detalle del producto</div>
-				<h2>Carbon Frame Bike<br><em>Edición Descenso 2026</em></h2>
-				<div class="sub">
-					Mountain bike de descenso a medida: cuadro de carbono RobertS 2016, 180&nbsp;mm de recorrido,
-					transmisión SRAM X01 Eagle y frenos Magura MT7. Incluye garantía de 5 años y ajuste de suspensión gratuito.
+				<h2 id="bcTitle">Carbon Frame Bike<br><em>Edición Descenso 2026</em></h2>
+				<div class="sub" id="bcSub"></div>
+				<div class="stars" id="bcStars">★★★★★ <small id="bcStarsTxt"></small></div>
+				<div class="price"><em id="bcPrice">€ 4.999,00</em> <small>IVA incluido</small></div>
+				<ul class="features" id="bcFeat"></ul>
+				<div id="colorWrap" style="display:none">
+					<div class="lbl">Color:</div>
+					<div id="colorSel"></div>
+					<span id="colorName"></span>
 				</div>
-				<div class="stars">★★★★★ <small>4.9 · 128 reseñas · envío gratis</small></div>
-				<div class="price"><em>€ 4.999,00</em> <small>IVA incluido</small></div>
-				<ul class="features">
-					<li>Cuadro de fibra de carbono con certificación de impacto</li>
-					<li>Suspensión Cane Creek DB 200-57 y horquilla de 180 mm</li>
-					<li>Grupo completo SRAM X01 DH de 12 velocidades</li>
-					<li>Frenos hidráulicos Magura MT7 con discos Hope 200 mm</li>
-					<li>Envío en 5-7 días · Montaje y ajuste incluidos</li>
-				</ul>
+				<div class="trust" id="bcTrust"></div>
 				<div class="row">
 					<button class="add" id="btnAdd"><i class="fa-solid fa-cart-plus"></i> Añadir al carrito</button>
 					<button class="now" id="btnNow"><i class="fa-solid fa-bolt"></i> Comprar ahora</button>
@@ -186,12 +316,49 @@
 		</section>
 
 		<section id="specs">
-			<h3>Especificaciones por sección</h3>
+			<h3 id="specsTitle">Especificaciones destacadas</h3>
 			<div class="grid" id="grid"></div>
 		</section>
 
-		<footer><span class="y">fabrick</span> Store · aventura — Demostración interactiva con three.js · Modelo: prefrontal cortex (Sketchfab)</footer>
+		<footer><span class="y">fabrick</span> Store · aventura — Visor 3D con three.js + GSAP · Bicicleta: prefrontalcortex (Sketchfab) · Polo: mayatexGT (Sketchfab)</footer>
 		<div id="toast">Añadido al carrito ✓</div>
+
+		<div class="modalBg" id="coBg">
+			<div class="modalCard">
+				<h3><i class="fa-solid fa-lock"></i> Pago seguro</h3>
+				<div class="sub">Resumen de tu pedido · envío gratuito en 24-48 h</div>
+				<ul id="coLines"></ul>
+				<div class="coTotal">Total <span id="coTotal">€ 0,00</span></div>
+				<div class="field"><input id="coName" placeholder="Nombre y apellidos" autocomplete="name"></div>
+				<div class="field"><input id="coEmail" type="email" placeholder="Email de contacto" autocomplete="email"></div>
+				<div class="field"><input id="coAddr" placeholder="Dirección de envío" autocomplete="street-address"></div>
+				<div class="field row2">
+					<input id="coCity" placeholder="Ciudad" autocomplete="address-level2">
+					<select id="coMethod">
+						<option>Tarjeta de crédito</option>
+						<option>PayPal</option>
+						<option>Contra reembolso</option>
+					</select>
+				</div>
+				<div class="coErr" id="coErr">Revisa los campos: nombre y email válidos son obligatorios.</div>
+				<button class="primary" id="coPay"><i class="fa-solid fa-shield-halved"></i> Confirmar compra segura</button>
+				<button class="ghost" id="coClose"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+			</div>
+		</div>
+
+		<div class="modalBg" id="secureBg">
+			<div class="modalCard" id="secureCard">
+				<div class="lockWrap"><i class="fa-solid fa-lock"></i></div>
+				<h3>¡Compra segura!</h3>
+				<p>Gracias, <b id="secName"></b>. Tu pedido <b id="secOrder"></b> está confirmado y pagado con seguridad.<br>Recibirás un email con el seguimiento del envío.</p>
+				<div class="secBadges">
+					<span><i class="fa-solid fa-shield-halved"></i> Cifrado SSL</span>
+					<span><i class="fa-solid fa-credit-card"></i> Pago protegido</span>
+					<span><i class="fa-solid fa-truck-fast"></i> Envío 24-48 h</span>
+				</div>
+				<button class="primary" id="secOk"><i class="fa-solid fa-circle-check"></i> Seguir navegando</button>
+			</div>
+		</div>
 
 		<script type="importmap">
 			{
@@ -201,6 +368,8 @@
 				}
 			}
 		</script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
 		<script type="module">
 
@@ -212,87 +381,250 @@
 			import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 			import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 
-			const PARTS = [
-				[ 'Cuadro de carbono', 'Fibra de carbono · Geometría DH · Pedalier integrado', 'Marco RobertS 2016 con refuerzos en las uniones y cableado interno.' ],
-				[ 'Basculante trasero', 'Carbono · Pivote sellado · Cinemática de bieletas', 'Vainas y tirantes que comprimen el amortiguador con progresividad.' ],
-				[ 'Amortiguador', 'Cane Creek DB 200-57 · 57 mm', 'Compresión y rebote ajustables para absorber impactos.' ],
-				[ 'Horquilla delantera', 'Telescópica · 180 mm · Ajuste de precarga', 'Absorbe baches, raíces y saltos manteniendo la tracción.' ],
-				[ 'Manillar y dirección', 'Manillar ancho · Potencia Hope FR 35 mm', 'Puños ergonómicos, dirección sellada y mandos de freno.' ],
-				[ 'Frenos', 'Magura MT7 · 4 pistones · Discos Hope 200 mm', 'Hidráulicos con gran potencia y resistencia térmica.' ],
-				[ 'Rueda delantera', '27.5" · Vee Tire 584x75 · Buje Tune King 110 mm', '32 radios y disco de freno flotante de 200 mm.' ],
-				[ 'Rueda trasera', '24" · Vee Tire 507x100 · Buje Tune Kong 150 mm', 'Eje pasante y casete SRAM X01 Eagle de 12 velocidades.' ],
-				[ 'Transmisión', 'SRAM X01 DH · Plato 26 dientes', 'Bielas X01, cadena reforzada y cambio con tensor.' ],
-				[ 'Sillín y tija', 'Sillín RobertS · Tija regulable', 'Postura ajustable para máxima eficiencia de pedaleo.' ],
-				[ 'Pedales', 'Funn Bigfoot · Plataforma con pines', 'Agarre sin calas ideal para descenso y enduro.' ]
-			];
+			const PRODUCTS = {
+				bike: {
+					name: 'Carbon Frame Bike',
+					tag: 'Edición Descenso 2026',
+					price: 4999.00,
+					priceTxt: '€ 4.999,00',
+					stars: '4.9 · 128 reseñas · envío gratis',
+					sub: 'Mountain bike de descenso a medida: cuadro de carbono RobertS 2016, 180 mm de recorrido, transmisión SRAM X01 Eagle y frenos Magura MT7. Incluye garantía de 5 años y ajuste de suspensión gratuito.',
+					features: [
+						'Cuadro de fibra de carbono con certificación de impacto',
+						'Suspensión Cane Creek DB 200-57 y horquilla de 180 mm',
+						'Grupo completo SRAM X01 DH de 12 velocidades',
+						'Frenos hidráulicos Magura MT7 con discos Hope 200 mm',
+						'Envío en 5-7 días · Montaje y ajuste incluidos'
+					],
+					specs: [
+						[ 'person-biking', 'Cuadro', 'Fibra de carbono', 'RobertS 2016 con refuerzos en las uniones y cableado interno.' ],
+						[ 'link', 'Basculante', 'Carbono · bieletas', 'Vainas y tirantes con pivotes sellados y cinemática progresiva.' ],
+						[ 'gauge', 'Amortiguador', 'Cane Creek DB · 57 mm', 'Compresión y rebote ajustables para absorber impactos.' ],
+						[ 'arrows-up-down', 'Horquilla', '180 mm telescópica', 'Absorbe baches, raíces y saltos manteniendo la tracción.' ],
+						[ 'grip', 'Manillar', 'Hope FR · 35 mm', 'Ancho, con puños ergonómicos y dirección sellada.' ],
+						[ 'circle-dot', 'Frenos', 'Magura MT7 · 4 pistones', 'Hidráulicos con discos Hope 200 mm y resistencia térmica.' ],
+						[ 'circle-half-stroke', 'Rueda delantera', '27.5" · Vee Tire 584x75', '32 radios y buje Tune King de 110 mm.' ],
+						[ 'circle', 'Rueda trasera', '24" · Vee Tire 507x100', 'Eje pasante y buje Tune Kong de 150 mm.' ],
+						[ 'gear', 'Transmisión', 'SRAM X01 DH · 12 v', 'Plato de 26 dientes, cadena reforzada y tensor.' ],
+						[ 'chair', 'Sillín y tija', 'RobertS · regulable', 'Postura ajustable para máxima eficiencia de pedaleo.' ],
+						[ 'shoe-prints', 'Pedales', 'Funn Bigfoot', 'Plataforma con pines de agarre para descenso y enduro.' ],
+						[ 'scale-balanced', 'Peso', '14,2 kg completo', 'Montaje de competición con componentes ultraligeros.' ]
+					]
+				},
+				polo: {
+					name: 'Polo Blanco',
+					tag: 'Algodón piqué premium',
+					price: 49.90,
+					priceTxt: '€ 49,90',
+					stars: '4.8 · 214 reseñas · envío gratis',
+					sub: 'Polo clásico en algodón piqué de fibra larga, cuello italiano con botones nácar y corte slim. Confeccionado en Portugal con tejido teñido en origen: más color, más durabilidad.',
+					features: [
+						'Algodón piqué 100% de fibra larga · 190 g/m²',
+						'Cuello italiano y tapeta con botones de nácar',
+						'Corte slim con laterales reforzados',
+						'Tintura en origen que no destiñe (más de 50 lavados)',
+						'Envío en 24-48 h · Devolución gratis 30 días'
+					],
+					specs: [
+						[ 'shirt', 'Tejido', 'Piqué premium', 'Algodón de fibra larga de 190 g/m², transpirable y sin arrugas.' ],
+						[ 'ruler', 'Corte', 'Slim · entallado', 'Línea moderna con laterales reforzados y costuras planas.' ],
+						[ 'hashtag', 'Tallas', 'S · M · L · XL', 'Guía de tallas en el envío con devolución gratis garantizada.' ],
+						[ 'scissors', 'Detalles', 'Cuello italiano', 'Tapeta con 3 botones de nácar y botonadura de refuerzo.' ],
+						[ 'droplet', 'Cuidado', 'Lavado a 30 °C', 'Tejido teñido en origen que no destiñe ni encoge.' ],
+						[ 'earth-europe', 'Origen', 'Hecho en Portugal', 'Confección europea con tintura certificada Oeko-Tex.' ]
+					],
+					colors: [
+						{ name: 'Blanco', hex: '#f5f3ee' },
+						{ name: 'Negro', hex: '#1b1b1f' },
+						{ name: 'Azul marino', hex: '#223a7a' },
+						{ name: 'Rojo', hex: '#c02c26' },
+						{ name: 'Amarillo', hex: '#efb70d' },
+						{ name: 'Verde', hex: '#1e7d4b' }
+					]
+				}
+			};
 
-			const grid = document.getElementById( 'grid' );
-			for ( const [ name, chips, desc ] of PARTS ) {
+			const $ = id => document.getElementById( id );
+			let current = 'bike';
+			let cart = [];
+			let poloColor = 0;
 
-				const card = document.createElement( 'div' );
-				card.className = 'card';
-				let chipHtml = '';
-				for ( const c of chips.split( '·' ) ) chipHtml += '<span>' + c.trim() + '</span>';
-				card.innerHTML = '<h4>' + name + '</h4><p>' + desc + '</p><div class="chips">' + chipHtml + '</div>';
-				grid.appendChild( card );
+			const bikeView = $('bikeView');
+			const poloView = $('poloView');
+			const grid = $('grid');
 
-			}
+			function eur( n ) { return '€ ' + n.toLocaleString( 'es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 } ); }
 
-			let cart = 0;
-			const cartN = document.querySelector( '#cartPill .n' );
-			const toast = document.getElementById( 'toast' );
-			let toastTimer = null;
-
-			function beep() {
-
+			function beep( f = 880, d = 0.12 ) {
 				try {
-
 					const ctx = new ( window.AudioContext || window.webkitAudioContext )();
 					const t = ctx.currentTime;
 					const o = ctx.createOscillator(), g = ctx.createGain();
-					o.frequency.value = 880;
+					o.frequency.value = f;
 					g.gain.setValueAtTime( 0.0001, t );
 					g.gain.exponentialRampToValueAtTime( 0.15, t + 0.01 );
-					g.gain.exponentialRampToValueAtTime( 0.0001, t + 0.12 );
+					g.gain.exponentialRampToValueAtTime( 0.0001, t + d );
 					o.connect( g ).connect( ctx.destination );
-					o.start( t );
-					o.stop( t + 0.14 );
-
+					o.start( t ); o.stop( t + d + 0.02 );
 				} catch ( e ) { }
-
 			}
 
-			function showToast() {
+			function chime() {
+				beep( 660, 0.14 ); setTimeout( () => beep( 880, 0.2 ), 130 );
+			}
 
+			const toast = $('toast');
+			let toastTimer = null;
+			function showToast( txt ) {
+				toast.textContent = txt;
 				toast.classList.add( 'show' );
 				clearTimeout( toastTimer );
 				toastTimer = setTimeout( () => toast.classList.remove( 'show' ), 2200 );
-
 			}
 
-			document.getElementById( 'btnAdd' ).addEventListener( 'click', () => {
+			function buildSpecs( list ) {
+				grid.innerHTML = '';
+				for ( const [ icon, k, v, d ] of list ) {
+					const card = document.createElement( 'div' );
+					card.className = 'card';
+					card.innerHTML = '<div class="ic"><i class="fa-solid fa-' + icon + '"></i></div><div class="k">' + k + '</div><div class="v">' + v + '</div><div class="d">' + d + '</div>';
+					grid.appendChild( card );
+				}
+			}
 
-				cart ++;
-				cartN.textContent = cart;
-				beep();
-				showToast();
+			function renderColors() {
+				const sel = $('colorSel');
+				sel.innerHTML = '';
+				PRODUCTS.polo.colors.forEach( ( c, i ) => {
+					const sw = document.createElement( 'button' );
+					sw.className = 'sw' + ( i === poloColor ? ' active' : '' );
+					sw.style.background = c.hex;
+					sw.title = c.name;
+					sw.addEventListener( 'click', () => { selectColor( i ); } );
+					sel.appendChild( sw );
+				} );
+				$('colorName').textContent = PRODUCTS.polo.colors[ poloColor ].name;
+			}
 
+			function selectColor( i ) {
+				poloColor = i;
+				$('colorName').textContent = PRODUCTS.polo.colors[ i ].name;
+				document.querySelectorAll( '#colorSel .sw' ).forEach( ( s, j ) => s.classList.toggle( 'active', j === i ) );
+				if ( poloMat ) poloMat.color.setHex( parseInt( PRODUCTS.polo.colors[ i ].hex.slice( 1 ), 16 ) );
+				beep( 660, 0.09 );
+				if ( window.gsap && $('colorName') ) gsap.fromTo( $('colorName'), { y: 6, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3 } );
+			}
+
+			function applyProduct( id ) {
+				const P = PRODUCTS[ id ];
+				current = id;
+
+				document.querySelectorAll( '#prodTabs .tab' ).forEach( t => t.classList.toggle( 'active', t.dataset.prod === id ) );
+
+				bikeView.style.display = id === 'bike' ? '' : 'none';
+				poloView.style.display = id === 'polo' ? '' : 'none';
+				if ( id === 'bike' ) resizeBike();
+				else resizePolo();
+
+				$('bcTitle').innerHTML = P.name + '<br><em>' + P.tag + '</em>';
+				$('bcSub').textContent = P.sub;
+				$('bcStarsTxt').textContent = P.stars;
+				$('bcPrice').textContent = P.priceTxt;
+				$('bcFeat').innerHTML = P.features.map( f => '<li>' + f + '</li>' ).join( '' );
+				$('bcTrust').innerHTML =
+					'<span><i class="fa-solid fa-lock"></i> Pago seguro</span>' +
+					'<span><i class="fa-solid fa-truck-fast"></i> Envío gratis</span>' +
+					'<span><i class="fa-solid fa-rotate-left"></i> Devolución 30 días</span>';
+				$('colorWrap').style.display = P.colors ? '' : 'none';
+				$('viewerBadge').textContent = id === 'bike' ? 'Vista 3D en vivo' : 'Modelo original (Sketchfab)';
+				buildSpecs( P.specs );
+				$('specsTitle').textContent = 'Especificaciones · ' + P.name;
+				document.title = 'fabrick Store · aventura - ' + P.name;
+
+				if ( window.gsap ) gsap.fromTo( [ '#bcTitle', '#bcSub', '#bcPrice', '#bcFeat', '#buyCol .row' ],
+					{ y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.05, ease: 'power3.out' } );
+			}
+
+			document.querySelectorAll( '#prodTabs .tab' ).forEach( t => t.addEventListener( 'click', () => applyProduct( t.dataset.prod ) ) );
+
+			document.querySelectorAll( '.pMode' ).forEach( b => b.addEventListener( 'click', () => {
+				setPoloMode( b.dataset.mode );
+			} ) );
+
+			function setPoloMode( mode ) {
+				document.querySelectorAll( '.pMode' ).forEach( b => b.classList.toggle( 'active', b.dataset.mode === mode ) );
+				$('poloFrame').style.display = mode === 'frame' ? '' : 'none';
+				$('polo3d').style.display = mode === 'color' ? '' : 'none';
+				$('viewerSpin').style.display = mode === 'color' ? '' : 'none';
+				$('viewerBadge').textContent = mode === 'color' ? 'Color 3D · vista previa' : 'Modelo original (Sketchfab)';
+				if ( mode === 'color' ) { makePolo3D(); resizePolo(); }
+			}
+
+			function addToCart( silent ) {
+				const P = PRODUCTS[ current ];
+				const color = P.colors ? P.colors[ poloColor ].name : null;
+				cart.push( { name: P.name + ( color ? ' · ' + color : '' ), price: P.price } );
+				document.querySelector( '#cartPill .n' ).textContent = cart.length;
+				if ( ! silent ) { beep(); showToast( 'Añadido al carrito: ' + P.name ); }
+			}
+
+			function openCheckout() {
+				if ( cart.length === 0 ) addToCart( true );
+				const lines = $('coLines');
+				lines.innerHTML = '';
+				let total = 0;
+				cart.forEach( it => {
+					total += it.price;
+					const li = document.createElement( 'li' );
+					li.innerHTML = '<span>' + it.name + '</span><b>' + eur( it.price ) + '</b>';
+					lines.appendChild( li );
+				} );
+				$('coTotal').textContent = eur( total );
+				$('coErr').classList.remove( 'show' );
+				$('coBg').classList.add( 'open' );
+				beep( 740, 0.1 );
+			}
+
+			function closeCheckout() { $('coBg').classList.remove( 'open' ); }
+
+			$('btnAdd').addEventListener( 'click', () => addToCart( false ) );
+			$('btnNow').addEventListener( 'click', openCheckout );
+			$('cartPill').addEventListener( 'click', openCheckout );
+			$('coClose').addEventListener( 'click', closeCheckout );
+			$('coBg').addEventListener( 'click', e => { if ( e.target === $('coBg') ) closeCheckout(); } );
+
+			$('coPay').addEventListener( 'click', () => {
+				const name = $('coName').value.trim();
+				const email = $('coEmail').value.trim();
+				let ok = true;
+				$('coName').parentElement.classList.toggle( 'bad', name.length < 2 );
+				$('coEmail').parentElement.classList.toggle( 'bad', ! /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test( email ) );
+				if ( name.length < 2 || ! /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test( email ) ) ok = false;
+				if ( ! ok ) {
+					$('coErr').classList.add( 'show' );
+					beep( 220, 0.2 );
+					return;
+				}
+				$('coErr').classList.remove( 'show' );
+				$('coBg').classList.remove( 'open' );
+				$('secName').textContent = name.split( ' ' )[ 0 ];
+				$('secOrder').textContent = 'FB-' + Math.floor( 100000 + Math.random() * 900000 );
+				$('secureBg').classList.add( 'open' );
+				cart = [];
+				document.querySelector( '#cartPill .n' ).textContent = 0;
+				chime();
 			} );
 
-			document.getElementById( 'btnNow' ).addEventListener( 'click', () => {
-
-				beep();
-				toast.textContent = '🛒 Pedido de demostración generado (€ 4.999,00)';
-				showToast();
-
+			$('secOk').addEventListener( 'click', () => {
+				$('secureBg').classList.remove( 'open' );
+				$('coName').value = ''; $('coEmail').value = ''; $('coAddr').value = ''; $('coCity').value = '';
 			} );
-
-			const wrap = document.getElementById( 'viewerWrap' );
+			$('secureBg').addEventListener( 'click', e => { if ( e.target === $('secureBg') ) $('secOk').click(); } );
 
 			const renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
 			renderer.toneMapping = THREE.ACESFilmicToneMapping;
-			wrap.appendChild( renderer.domElement );
+			bikeView.appendChild( renderer.domElement );
 
 			const camera = new THREE.PerspectiveCamera( 30, 1, 0.25, 20 );
 			camera.position.set( - 3, 1.5, 3.5 );
@@ -334,27 +666,107 @@
 
 				}
 
-			} );
+			}, undefined, ( err ) => { console.warn( 'Modelo no cargado:', err.message ); } );
 
-			function resize() {
-
-				const w = wrap.clientWidth, h = wrap.clientHeight;
+			function resizeBike() {
+				if ( current !== 'bike' ) return;
+				const w = bikeView.clientWidth, h = bikeView.clientHeight;
 				renderer.setSize( w, h );
 				camera.aspect = w / h;
 				camera.updateProjectionMatrix();
+			}
+
+			/* ---------- visor 3D del polo (selector de color) ---------- */
+
+			let poloRenderer = null, poloScene = null, poloCamera = null, poloControls = null, poloMat = null;
+
+			function makePolo3D() {
+
+				if ( poloRenderer ) return;
+				const host = $('polo3d');
+
+				poloRenderer = new THREE.WebGLRenderer( { antialias: true } );
+				poloRenderer.setPixelRatio( Math.min( window.devicePixelRatio, 2 ) );
+				poloRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+				host.appendChild( poloRenderer.domElement );
+
+				poloScene = new THREE.Scene();
+				poloScene.background = new THREE.Color( 0xf4f6f8 );
+				poloScene.environment = scene.environment;
+
+				poloScene.add( new THREE.AmbientLight( 0xffffff, 1.15 ) );
+				const dl = new THREE.DirectionalLight( 0xffffff, 1.7 ); dl.position.set( 2, 3, 4 ); poloScene.add( dl );
+				const rim = new THREE.DirectionalLight( 0xffffff, 0.5 ); rim.position.set( - 3, 1, - 2 ); poloScene.add( rim );
+
+				poloCamera = new THREE.PerspectiveCamera( 32, 1, 0.1, 10 );
+				poloCamera.position.set( 0.45, 0.5, 2.5 );
+
+				poloControls = new OrbitControls( poloCamera, poloRenderer.domElement );
+				poloControls.target.set( 0, 0.05, 0 );
+				poloControls.enableDamping = true;
+				poloControls.enableZoom = false;
+				poloControls.autoRotate = true;
+				poloControls.autoRotateSpeed = 1.2;
+				poloControls.minPolarAngle = 1.25;
+				poloControls.maxPolarAngle = 1.55;
+
+				const g = new THREE.Group();
+				poloMat = new THREE.MeshStandardMaterial( { color: parseInt( PRODUCTS.polo.colors[ poloColor ].hex.slice( 1 ), 16 ), roughness: 0.7, metalness: 0.02 } );
+
+				const torso = new THREE.Mesh( new THREE.CapsuleGeometry( 0.52, 0.5, 6, 22 ), poloMat );
+				torso.scale.z = 0.8;
+
+				const armGeo = new THREE.CapsuleGeometry( 0.17, 0.32, 6, 12 );
+				const armL = new THREE.Mesh( armGeo, poloMat );
+				armL.position.set( - 0.6, - 0.05, 0.02 ); armL.rotation.z = 0.85;
+				const armR = new THREE.Mesh( armGeo, poloMat );
+				armR.position.set( 0.6, - 0.05, 0.02 ); armR.rotation.z = - 0.85;
+
+				const collar = new THREE.Mesh( new THREE.CylinderGeometry( 0.26, 0.3, 0.1, 20, 1, true ), poloMat );
+				collar.position.y = 0.76; collar.scale.y = 1.1;
+
+				const placket = new THREE.Mesh( new THREE.BoxGeometry( 0.05, 0.32, 0.03 ), poloMat );
+				placket.position.set( 0, 0.32, 0.46 );
+
+				const btnMat = new THREE.MeshStandardMaterial( { color: 0xfaf6ea, roughness: 0.3 } );
+				const btnGeo = new THREE.SphereGeometry( 0.024, 10, 10 );
+				for ( let i = 0; i < 3; i ++ ) {
+					const b = new THREE.Mesh( btnGeo, btnMat );
+					b.position.set( 0, 0.26 + i * 0.07, 0.475 );
+					g.add( b );
+				}
+
+				g.add( torso, armL, armR, collar, placket );
+				g.position.y = 0.14;
+				poloScene.add( g );
+
+				const disc = new THREE.Mesh(
+					new THREE.CircleGeometry( 1.05, 40 ),
+					new THREE.MeshBasicMaterial( { color: 0x000000, transparent: true, opacity: 0.06 } )
+				);
+				disc.rotation.x = - Math.PI / 2;
+				disc.position.y = - 0.62;
+				poloScene.add( disc );
+
+				poloRenderer.setAnimationLoop( () => {
+					poloControls.update();
+					poloRenderer.render( poloScene, poloCamera );
+				} );
 
 			}
 
-			resize();
-			window.addEventListener( 'resize', resize );
+			function resizePolo() {
+				if ( current !== 'polo' || ! poloRenderer ) return;
+				const w = poloView.clientWidth, h = poloView.clientHeight;
+				poloRenderer.setSize( w, h );
+				poloCamera.aspect = w / h;
+				poloCamera.updateProjectionMatrix();
+			}
 
-			renderer.setAnimationLoop( () => {
-
-				for ( const m of mixers ) m.update( 1 / 60 );
-				controls.update();
-				renderer.render( scene, camera );
-
-			} );
+			renderColors();
+			applyProduct( 'bike' );
+			resizeBike();
+			window.addEventListener( 'resize', () => { resizeBike(); resizePolo(); } );
 
 		</script>
 	</body>

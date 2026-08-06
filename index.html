@@ -348,11 +348,13 @@
 			const tooltip = document.getElementById( 'tooltip' );
 			const errBanner = document.getElementById( 'errBanner' );
 			const soundBtn = document.getElementById( 'soundBtn' );
+			const logoHost = document.getElementById( 'logo3d' );
 
 			let camera, scene, renderer, mixer, action, controls, bike;
 			let selectedPart = null;
 			let hoveredPart = null;
 			let soundOn = true;
+			let logoScene = null, logoCamera = null, logoRenderer = null;
 
 			const timer = new THREE.Timer();
 			const raycaster = new THREE.Raycaster();
@@ -434,10 +436,7 @@
 
 			}
 
-			const logoHost = document.getElementById( 'logo3d' );
-			let logoScene = null, logoCamera = null, logoRenderer = null;
-
-			function buildWord( font, text, mat, size, height ) {
+						function buildWord( font, text, mat, size, height ) {
 
 				const group = new THREE.Group();
 				const meshes = [];
