@@ -142,7 +142,7 @@
 				color: var(--ink); font-weight: 800; font-size: 13px;
 				box-shadow: 0 6px 20px rgba(16, 20, 24, 0.16); backdrop-filter: blur(6px);
 			}
-			#wheelBox .item.active .dot { background: var(--yellow); box-shadow: 0 0 10px rgba(242, 183, 5, 0.8); }
+			#wheelBox .item.active .dot { background: var(--yellow); box-shadow: 0 0 10px rgba(16, 20, 24, 0.8); }
 			#wheelBox .arrows { display: flex; gap: 8px; justify-content: center; margin-top: 10px; pointer-events: auto; }
 			#wheelBox .arrows button {
 				flex: 1; background: var(--glass-strong); border: 1px solid var(--line); color: var(--ink);
@@ -179,6 +179,13 @@
 			#ctlBar .sep { width: 1px; height: 24px; background: var(--line); margin: 0 6px; }
 			#ctlBar #btnExplode.active { background: var(--yellow); color: #fff; }
 			#ctlBar #btnExplode.active i { color: rgba(255, 255, 255, 0.9); }
+			#toast {
+				position: fixed; top: 84px; left: 50%; transform: translateX(-50%) translateY(-8px); z-index: 45;
+				background: rgba(17, 17, 17, 0.92); color: #fff; font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em;
+				padding: 9px 18px; border-radius: 14px; pointer-events: none; opacity: 0; white-space: nowrap;
+				transition: opacity 0.28s, transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+			}
+			#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 			#tooltip {
 				position: fixed; z-index: 30; pointer-events: none; display: none;
 				background: rgba(255, 255, 255, 0.92); border: 1px solid var(--yellow);
@@ -250,7 +257,7 @@
 			</div>
 		</div>
 
-		<div id="hint"><i class="fa-solid fa-hand-pointer"></i> Gira la bici con el ratón o un dedo<br><i class="fa-solid fa-dice-d6"></i> Explora cada pieza con la ruleta</div>
+		<div id="hint"><i class="fa-solid fa-hand-pointer"></i> Gira la bici con el ratón o un dedo<br><i class="fa-solid fa-dice-d6"></i> Explora cada pieza con la ruleta<br><i class="fa-solid fa-keyboard"></i> ↑↓ piezas · <b>C</b> cámara · <b>E</b> armar / desacoplar</div>
 		<div id="tooltip"></div>
 		<div id="errBanner"></div>
 
@@ -467,6 +474,17 @@
 					touchY = null;
 				}, { passive: true } );
 
+				document.addEventListener( 'keydown', ( e ) => {
+
+					if ( e.target && /INPUT|TEXTAREA|SELECT/.test( e.target.tagName ) ) return;
+					const k = e.key.toLowerCase();
+					if ( e.key === 'ArrowUp' ) { rotateWheel( - 1 ); }
+					else if ( e.key === 'ArrowDown' ) { rotateWheel( 1 ); }
+					else if ( k === 'c' ) { nextCam(); }
+					else if ( k === 'e' ) { toggleExplode(); }
+
+				} );
+
 				document.addEventListener( 'pointerdown', ensureAudio, { once: true, capture: true } );
 
 				window.addEventListener( 'resize', onResize );
@@ -577,16 +595,21 @@
 
 				exploded = ! exploded;
 				btnExplode.classList.toggle( 'active', exploded );
+				const exLbl = btnExplode.querySelector( '.lbl' );
+				if ( exLbl ) exLbl.textContent = exploded ? 'Armar' : 'Desacoplar';
+				btnExplode.title = exploded ? 'Armar piezas' : 'Desacoplar piezas';
 
 				if ( exploded ) {
 
 					if ( action ) action.paused = true;
 					explodeBike();
+					toast( 'Piezas desacopladas' );
 
 				} else {
 
 					if ( action ) action.paused = false;
 					resetBike();
+					toast( 'Bicicleta ensamblada' );
 
 				}
 
@@ -652,18 +675,17 @@
 
 			let camIdx = 0;
 			const CAM_PRESETS = [
-				{ pos: [ - 2.5, 1.6, 3.0 ], tgt: [ 0, 0.7, 0 ] },
-				{ pos: [ 2.6, 1.7, 2.9 ], tgt: [ 0, 0.7, 0 ] },
-				{ pos: [ 0.6, 2.6, - 3.4 ], tgt: [ 0, 0.7, 0 ] },
-				{ pos: [ - 3.6, 1.5, - 2.2 ], tgt: [ 0, 0.7, 0 ] },
-				{ pos: [ 0.2, 4.2, 0.6 ], tgt: [ 0, 0.7, 0 ] }
+				{ name: 'Frontal derecha', pos: [ - 2.5, 1.6, 3.0 ], tgt: [ 0, 0.7, 0 ] },
+				{ name: 'Frontal izquierda', pos: [ 2.6, 1.7, 2.9 ], tgt: [ 0, 0.7, 0 ] },
+				{ name: 'Trasera', pos: [ 0.6, 2.6, - 3.4 ], tgt: [ 0, 0.7, 0 ] },
+				{ name: 'Lateral', pos: [ - 3.6, 1.5, - 2.2 ], tgt: [ 0, 0.7, 0 ] },
+				{ name: 'Cenital', pos: [ 0.2, 4.2, 0.6 ], tgt: [ 0, 0.7, 0 ] }
 			];
 
 			function nextCam() {
 
 				camIdx = ( camIdx + 1 ) % CAM_PRESETS.length;
 				const p = CAM_PRESETS[ camIdx ];
-				const d = camera.position.distanceTo( controls.target );
 
 				if ( window.gsap ) {
 
@@ -676,6 +698,8 @@
 					controls.target.set( p.tgt[ 0 ], p.tgt[ 1 ], p.tgt[ 2 ] );
 
 				}
+
+				toast( 'Cámara ' + ( camIdx + 1 ) + ' / ' + CAM_PRESETS.length + ' · ' + p.name );
 
 			}
 
@@ -968,6 +992,24 @@
 				camera.aspect = innerWidth / innerHeight;
 				camera.updateProjectionMatrix();
 				renderer.setSize( innerWidth, innerHeight );
+
+			}
+
+			let toastTimer = null;
+			function toast( msg ) {
+
+				let el = document.getElementById( 'toast' );
+				if ( ! el ) {
+
+					el = document.createElement( 'div' );
+					el.id = 'toast';
+					document.body.appendChild( el );
+
+				}
+				el.textContent = msg;
+				el.classList.add( 'show' );
+				clearTimeout( toastTimer );
+				toastTimer = setTimeout( () => el.classList.remove( 'show' ), 1900 );
 
 			}
 

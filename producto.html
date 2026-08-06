@@ -15,9 +15,9 @@
 				--ink: #111111;
 				--muted: #7a828c;
 				--faint: rgba(17, 17, 17, 0.05);
-				--yellow: #f2b705;
-				--yellow2: #ffd21f;
-				--cyan: #0ea5e9;
+				--yellow: #101418;
+				--yellow2: #3a4149;
+				--cyan: #5a6672;
 				--line: rgba(17, 17, 17, 0.1);
 				--glass: rgba(255, 255, 255, 0.58);
 				--glass-strong: rgba(255, 255, 255, 0.72);
@@ -56,7 +56,7 @@
 			}
 			#cartPill i { color: var(--yellow); }
 			#cartPill .n {
-				background: var(--yellow); color: #1a1300; border-radius: 50%; min-width: 20px; height: 20px;
+				background: var(--yellow); color: #ffffff; border-radius: 50%; min-width: 20px; height: 20px;
 				display: grid; place-items: center; font-size: 11px; font-weight: 800;
 			}
 
@@ -68,8 +68,8 @@
 			}
 			#prodTabs .tab i { color: var(--yellow); }
 			#prodTabs .tab:hover { transform: translateY(-2px); box-shadow: var(--shadow); color: var(--ink); }
-			#prodTabs .tab.active { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; border-color: transparent; box-shadow: 0 8px 24px rgba(242, 183, 5, 0.4); }
-			#prodTabs .tab.active i { color: #1a1300; }
+			#prodTabs .tab.active { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #ffffff; border-color: transparent; box-shadow: 0 8px 24px rgba(16, 20, 24, 0.4); }
+			#prodTabs .tab.active i { color: #ffffff; }
 
 			#hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 34px; padding: 22px 26px 20px; max-width: 1180px; margin: 0 auto; }
 			#viewerWrap {
@@ -80,8 +80,8 @@
 			#viewerWrap canvas { display: block; width: 100%; height: 100%; }
 			#viewerWrap .badge {
 				position: absolute; top: 14px; left: 14px; z-index: 6;
-				background: var(--yellow); color: #1a1300; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
-				padding: 6px 12px; border-radius: 20px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(242, 183, 5, 0.35);
+				background: var(--yellow); color: #ffffff; font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+				padding: 6px 12px; border-radius: 20px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(16, 20, 24, 0.35);
 			}
 			#viewerWrap .spin {
 				position: absolute; bottom: 12px; right: 14px; z-index: 6;
@@ -99,8 +99,8 @@
 			}
 			.poloModes button i { color: var(--yellow); }
 			.poloModes button:hover { color: var(--ink); }
-			.poloModes button.active { background: var(--yellow); color: #1a1300; border-color: transparent; }
-			.poloModes button.active i { color: #1a1300; }
+			.poloModes button.active { background: var(--yellow); color: #ffffff; border-color: transparent; }
+			.poloModes button.active i { color: #ffffff; }
 			#poloFrame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
 			#buyCol { display: flex; flex-direction: column; gap: 13px; }
@@ -125,7 +125,7 @@
 				transition: transform 0.15s, box-shadow 0.15s; position: relative;
 			}
 			#colorSel .sw:hover { transform: scale(1.12); }
-			#colorSel .sw.active { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.45); }
+			#colorSel .sw.active { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(16, 20, 24, 0.45); }
 			#colorSel .sw.active::after {
 				content: ''; position: absolute; inset: 6px; border-radius: 50%; background: #fff; mix-blend-mode: difference;
 			}
@@ -146,8 +146,8 @@
 			}
 			#buyCol .row .add { background: var(--glass-strong); color: var(--ink); border: 1px solid var(--line); backdrop-filter: blur(14px); box-shadow: 0 6px 16px rgba(17, 17, 17, 0.07); }
 			#buyCol .row .add i { color: var(--yellow); }
-			#buyCol .row .now { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; box-shadow: 0 8px 26px rgba(242, 183, 5, 0.45); }
-			#buyCol .row .now:hover { background: linear-gradient(135deg, var(--yellow2), #ffe25c); }
+			#buyCol .row .now { background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #ffffff; box-shadow: 0 8px 26px rgba(16, 20, 24, 0.45); }
+			#buyCol .row .now:hover { background: linear-gradient(135deg, var(--yellow2), #4c555e); }
 			#buyCol .row button:hover { transform: translateY(-2px); }
 			#buyCol .row button:active { transform: scale(0.98); }
 
@@ -161,11 +161,11 @@
 				backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
 				display: grid; grid-template-columns: auto 1fr; column-gap: 13px; row-gap: 3px; align-items: center;
 			}
-			#specs .card:hover { transform: translateY(-3px); border-color: rgba(242, 183, 5, 0.5); box-shadow: var(--shadow); }
+			#specs .card:hover { transform: translateY(-3px); border-color: rgba(16, 20, 24, 0.5); box-shadow: var(--shadow); }
 			#specs .card .ic {
 				grid-row: 1 / 3; width: 44px; height: 44px; border-radius: 13px;
-				background: linear-gradient(135deg, rgba(242, 183, 5, 0.18), rgba(242, 183, 5, 0.06));
-				border: 1px solid rgba(242, 183, 5, 0.3); display: grid; place-items: center;
+				background: linear-gradient(135deg, rgba(16, 20, 24, 0.18), rgba(16, 20, 24, 0.06));
+				border: 1px solid rgba(16, 20, 24, 0.3); display: grid; place-items: center;
 			}
 			#specs .card .ic i { color: var(--yellow); font-size: 17px; }
 			#specs .card .k { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 800; }
@@ -174,7 +174,7 @@
 
 			#toast {
 				position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-				z-index: 40; background: var(--yellow); color: #1a1300; font-weight: 800;
+				z-index: 40; background: var(--yellow); color: #ffffff; font-weight: 800;
 				padding: 13px 24px; border-radius: 14px; font-size: 13.5px; opacity: 0;
 				transition: all 0.3s; pointer-events: none; box-shadow: var(--shadow);
 			}
@@ -208,18 +208,18 @@
 				width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px;
 				font-family: inherit; font-size: 13.5px; background: #fbfcfe; transition: border-color 0.15s, box-shadow 0.15s;
 			}
-			.field input:focus, .field select:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(242, 183, 5, 0.2); }
+			.field input:focus, .field select:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(16, 20, 24, 0.2); }
 			.field.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 			.field.bad input { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15); }
 			.coErr { font-size: 12px; color: #dc2626; font-weight: 600; margin: -4px 0 10px; display: none; }
 			.coErr.show { display: block; }
 			.modalCard .primary {
 				width: 100%; border: 0; border-radius: 14px; padding: 14px; font-size: 14.5px; font-weight: 800; cursor: pointer;
-				background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #1a1300; font-family: inherit;
-				box-shadow: 0 8px 26px rgba(242, 183, 5, 0.4); display: flex; align-items: center; justify-content: center; gap: 9px;
+				background: linear-gradient(135deg, var(--yellow), var(--yellow2)); color: #ffffff; font-family: inherit;
+				box-shadow: 0 8px 26px rgba(16, 20, 24, 0.4); display: flex; align-items: center; justify-content: center; gap: 9px;
 				transition: transform 0.15s, box-shadow 0.15s;
 			}
-			.modalCard .primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(242, 183, 5, 0.55); }
+			.modalCard .primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(16, 20, 24, 0.55); }
 			.modalCard .ghost {
 				width: 100%; margin-top: 8px; border: 1px solid var(--line); border-radius: 14px; padding: 11px;
 				font-size: 13px; font-weight: 700; cursor: pointer; background: #fff; color: var(--muted); font-family: inherit;
@@ -228,9 +228,9 @@
 			.lockWrap {
 				width: 76px; height: 76px; border-radius: 50%; margin: 4px auto 16px;
 				background: linear-gradient(135deg, var(--yellow), var(--yellow2));
-				display: grid; place-items: center; box-shadow: 0 12px 34px rgba(242, 183, 5, 0.5);
+				display: grid; place-items: center; box-shadow: 0 12px 34px rgba(16, 20, 24, 0.5);
 			}
-			.lockWrap i { font-size: 32px; color: #1a1300; }
+			.lockWrap i { font-size: 32px; color: #ffffff; }
 			#secureCard { text-align: center; }
 			#secureCard h3 { justify-content: center; font-size: 22px; }
 			#secureCard p { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
